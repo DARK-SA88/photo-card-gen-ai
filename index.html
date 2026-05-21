@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>BCT Card Generator - Red Cyber Tech Edition</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700;800&family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --neon-red: #ff123f;
+  --neon-red-bright: #ff3b5f;
+  --crimson: #c8001a;
+  --gold: #ffea00;
+  --bg-void: #080103;
+  --bg-panel: #140205;
+  --bg-surface: #1d0308;
+  --border-dim: rgba(255, 18, 63, 0.15);
+  --border-mid: rgba(255, 18, 63, 0.35);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255,255,255,0.7);
+  --text-dim: rgba(255,255,255,0.4);
+  --radius: 12px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+  background: var(--bg-void);
+  background-image:
+    radial-gradient(ellipse 100% 40% at 50% 0%, rgba(255, 18, 63, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 30% at 80% 30%, rgba(255, 18, 63, 0.06) 0%, transparent 60%);
+  color: var(--text-primary);
+  font-family: 'Exo 2', sans-serif;
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/*  HEADER  */
+.header {
+  padding: 16px 16px 14px;
+  background: linear-gradient(180deg, rgba(20, 2, 5, 0.95) 0%, rgba(8, 1, 2, 0.9) 100%);
+  border-bottom: 1px solid var(--border-mid);
+  position: relative;
+}
+.header::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background: linear-gradient(90deg, transparent, var(--neon-red), var(--gold), var(--neon-red), transparent);
+}
+.header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom: 8px; }
+.header-badge {
+  font-family: 'Share Tech Mono', monospace; font-size: 10px;
+  letter-spacing: 2px; color: var(--neon-red); background: rgba(255, 18, 63, 0.08);
+  border: 1px solid rgba(255, 18, 63, 0.25); padding: 3px 10px; border-radius: 3px;
+}
+.header-version { font-family: 'Rajdhani', sans-serif; font-size: 10px; font-weight: 600; color: var(--text-dim); }
+.header-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 3px; line-height: 1; text-shadow: 0 0 20px rgba(255, 18, 63, 0.3); }
+.header-title em { font-style:normal; color: var(--gold); }
+.header-sub { font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 4px; color: var(--text-secondary); margin-top: 2px; }
+
+/*  CANVAS AREA  */
+.canvas-wrap { padding: 14px 14px 0; }
+.canvas-outer {
+  position: relative; border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 18, 63, 0.3), 0 8px 40px rgba(0,0,0,0.9);
+}
+#mainCanvas {
+  display:block; width:100%; height:auto; user-select:none; border-radius: var(--radius);
+}
+#mainCanvas.tool-paint { cursor: crosshair; }
+
+/*  DASHBOARD  */
+.dashboard { flex:1; padding: 14px; display:flex; flex-direction:column; gap: 14px; }
+.sec-label {
+  font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase;
+  margin-bottom: 8px; display:flex; align-items:center; gap: 8px;
+}
+.sec-label::after { content:''; flex:1; height:1px; background: linear-gradient(90deg, var(--border-dim), transparent); }
+
+/* Photos */
+.upload-row { display:grid; grid-template-columns:1fr 1fr; gap: 10px; }
+.upload-slot {
+  background: var(--bg-surface); border: 1.5px dashed var(--border-mid);
+  border-radius: var(--radius); cursor: pointer; position:relative; overflow:hidden;
+  height: 90px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.upload-slot.loaded { border-style:solid; border-color: var(--neon-red); }
+.slot-thumb { width:100%; height:100%; object-fit:cover; display:none; opacity:0.5; }
+.upload-slot.loaded .slot-thumb { display:block; }
+.slot-body { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.slot-name { font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-secondary); text-shadow:0 2px 4px #000; }
+.upload-slot.loaded .slot-name { color: #fff; }
+
+/* Tool Panel */
+.tool-panel { background: var(--bg-panel); border: 1px solid var(--border-mid); border-radius: var(--radius); overflow:hidden; }
+.tool-row { display:flex; border-bottom: 1px solid var(--border-dim); }
+.tool-row:last-child { border-bottom:none; }
+
+.tool-btn {
+  flex:1; padding: 12px 10px; background:transparent; border:none; border-right: 1px solid var(--border-dim);
+  color: var(--text-secondary); font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; cursor:pointer; display:flex; align-items:center; justify-content:center; gap: 6px;
+}
+.tool-btn:last-child { border-right:none; }
+.tool-btn.active { color: var(--text-primary); background: rgba(255, 18, 63, 0.12); }
+.tool-btn.active-gold { color: var(--neon-red); background: rgba(255, 18, 63, 0.05); }
+
+/* Settings Block */
+.settings-block { display:none; padding:12px; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border-dim); flex-direction:column; gap:10px; }
+.settings-block.open { display:flex; }
+
+/* Inputs */
+.input-group { display:flex; flex-direction:column; gap:4px; }
+.input-group label { font-family: 'Rajdhani', sans-serif; font-size: 10px; color: var(--text-dim); text-transform:uppercase; letter-spacing:1px;}
+.input-box {
+  width:100%; background:rgba(255,255,255,0.02); border:1px solid rgba(255, 18, 63, 0.2);
+  border-radius:6px; color:#fff; font-family:'Exo 2', sans-serif; font-size:14px; font-weight:500; padding:10px;
+  outline:none; transition:border 0.2s;
+}
+.input-box:focus { border-color:var(--neon-red); background:rgba(255, 18, 63, 0.04); }
+select.input-box { cursor: pointer; color: var(--neon-red); font-weight: 600; font-family: 'Share Tech Mono', monospace; }
+select.input-box option { background: #140205; color: #fff; }
+textarea.input-box { resize:vertical; min-height:75px; }
+.hl-yellow:focus { border-color:var(--gold); }
+.hl-red:focus { border-color:var(--neon-red-bright); }
+
+/* Buttons & Sliders */
+.btn-download {
+  width:100%; padding: 15px; background: linear-gradient(135deg, #800010 0%, #ff123f 50%, #ff5274 100%);
+  border:none; border-radius: var(--radius); color:#ffffff; font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+  letter-spacing: 3px; cursor:pointer; box-shadow: 0 4px 20px rgba(255, 18, 63, 0.3); margin-top:10px; font-weight: bold;
+}
+.btn-download:active { transform:scale(0.98); }
+.status { text-align:center; font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-dim); padding: 5px; }
+
+.mode-tabs { display:flex; gap:4px; margin-bottom:8px;}
+.mode-tab { flex:1; padding:8px; background:rgba(255,255,255,0.05); border:none; border-radius:4px; color:var(--text-secondary); font-size:11px; font-weight:700; cursor:pointer;}
+.mode-tab.sel { background:var(--neon-red); color:#ffffff; }
+input[type="file"] { display:none; }
+input[type=range].mini-range { flex:1; height:4px; -webkit-appearance:none; background:rgba(255,255,255,0.1); border-radius:2px; }
+input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--text-secondary); cursor:pointer;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="header-badge">RED INTEL</div>
+    <div class="header-version">v4.0 TECH RED</div>
+  </div>
+  <div class="header-title">TACTICAL <em>GENERATOR</em></div>
+  <div class="header-sub">AL HARAS UNIT · BANGLADESH CYBER TROOPS</div>
+</div>
+
+<!-- CANVAS -->
+<div class="canvas-wrap">
+  <div class="canvas-outer">
+    <canvas id="mainCanvas"></canvas>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+
+  <!-- Upload -->
+  <div>
+    <div class="sec-label">Upload Evidence Photos</div>
+    <div class="upload-row">
+      <div class="upload-slot" id="slot1" onclick="document.getElementById('photo1In').click()">
+        <img class="slot-thumb" id="prev1" alt="">
+        <div class="slot-body"><div class="slot-name">EVIDENCE 1 (LEFT)</div></div>
+      </div>
+      <div class="upload-slot" id="slot2" onclick="document.getElementById('photo2In').click()">
+        <img class="slot-thumb" id="prev2" alt="">
+        <div class="slot-body"><div class="slot-name">EVIDENCE 2 (RIGHT)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tools Panel -->
+  <div>
+    <div class="sec-label">Operations Settings</div>
+    <div class="tool-panel">
+
+      <div class="tool-row">
+        <button class="tool-btn active" id="btnText" onclick="setTool('text')"> Intel Text</button>
+        <button class="tool-btn" id="btnPaint" onclick="setTool('paint')"> Red Tech Brush</button>
+      </div>
+      
+      <!-- Text Panel -->
+      <div class="settings-block open" id="textSettings">
+        <div class="input-group">
+          <label style="color:var(--neon-red)">Incident Category</label>
+          <select id="categorySelect" class="input-box" onchange="onCategoryChange()">
+            <option value="obscene_account">Obscene Account</option>
+            <option value="obscene_page">Obscene Page</option>
+            <option value="atheist_account">Atheist Account</option>
+            <option value="atheist_page">Atheist Page</option>
+            <option value="anti_islam_account">Anti-Islamic Account</option>
+            <option value="anti_islam_page">Anti-Islamic Page</option>
+            <option value="gambling_page">Gambling Page</option>
+            <option value="gambling_account">Gambling Account</option>
+            <option value="scammer_page">Scammer Page</option>
+            <option value="scammer_account">Scammer Account</option>
+          </select>
+        </div>
+        
+        <div class="input-group">
+          <label>Tech Header Label</label>
+          <input type="text" id="headerText" class="input-box" placeholder="Header text..." oninput="renderFull()">
+        </div>
+
+        <div class="input-group">
+          <label>Target Details & Report Statement</label>
+          <textarea id="mainText" class="input-box" placeholder="Description here..." oninput="renderFull()"></textarea>
+        </div>
+        
+        <div class="input-group">
+          <label style="color:var(--gold)">Target Metrics Highlight (Yellow)</label>
+          <input type="text" id="hlText" class="input-box hl-yellow" placeholder="e.g. 136K followers" oninput="renderFull()">
+        </div>
+        <div class="input-group">
+          <label style="color:var(--neon-red-bright)">Status Highlight (Neon Red)</label>
+          <input type="text" id="stText" class="input-box hl-red" placeholder="e.g. terminated" oninput="renderFull()">
+        </div>
+      </div>
+
+      <!-- Paint Panel -->
+      <div class="settings-block" id="paintSettings">
+        <div class="mode-tabs">
+          <button class="mode-tab sel" id="modeBlur" onclick="setPaintMode('blur')">BLUR SENSOR</button>
+          <button class="mode-tab" id="modeMosaic" onclick="setPaintMode('mosaic')">MOSAIC SENSOR</button>
+        </div>
+        <div class="input-group" style="margin-bottom:10px;">
+          <label>Sensor Radius</label>
+          <input type="range" class="mini-range" id="brushSize" min="10" max="80" value="40">
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="mode-tab" onclick="undoPaint()" style="background:rgba(255,255,255,0.05); color:#fff;"> UNDO</button>
+          <button class="mode-tab" onclick="clearPaint()" style="background:rgba(255, 18, 63, 0.15); color:var(--neon-red-bright)"> PURGE SENSORS</button>
+        </div>
+      </div>
+
+      <div class="tool-row">
+        <button class="tool-btn active-gold" id="logoBtn" onclick="toggleLogo()"> Toggle Tactical Crest</button>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="btn-download" onclick="downloadCard()">EXTRACT TECHNICAL POSTCARD</button>
+  <div class="status" id="status">Upload system images and assign a protocol to extract.</div>
+
+</div>
+
+<!-- Hidden Inputs -->
+<input type="file" id="photo1In" accept="image/*" onchange="loadPhoto(this,1)">
+<input type="file" id="photo2In" accept="image/*" onchange="loadPhoto(this,2)">
+
+<script>
+//  Presets Database (Exact Matching English Format) 
+const textPresets = {
+  obscene_account: {
+    header: "OBSCENE ACCOUNT REMOVED",
+    desc: "An Facebook account/page amassing 136K followers has been terminated for disseminating obscene and indecent content by Team BCT",
+    yellow: "136K followers",
+    red: "terminated"
+  },
+  obscene_page: {
+    header: "OBSCENE PAGE REMOVED",
+    desc: "An Facebook page amassing 250K followers has been terminated for disseminating obscene and indecent content by Team BCT",
+    yellow: "250K followers",
+    red: "terminated"
+  },
+  atheist_account: {
+    header: "ATHEIST ACCOUNT REMOVED",
+    desc: "A Facebook account amassing 50K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT",
+    yellow: "50K followers",
+    red: "terminated"
+  },
+  atheist_page: {
+    header: "ATHEIST PAGE REMOVED",
+    desc: "A Facebook page amassing 100K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT",
+    yellow: "100K followers",
+    red: "terminated"
+  },
+  anti_islam_account: {
+    header: "ANTI-ISLAMIC ACCOUNT REMOVED",
+    desc: "A Facebook account amassing 80K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT",
+    yellow: "80K followers",
+    red: "terminated"
+  },
+  anti_islam_page: {
+    header: "ANTI-ISLAMIC PAGE REMOVED",
+    desc: "A Facebook page amassing 300K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT",
+    yellow: "300K followers",
+    red: "terminated"
+  },
+  gambling_page: {
+    header: "GAMBLING PAGE REMOVED",
+    desc: "A Facebook page amassing 400K followers has been terminated for promoting illegal online gambling and betting by Team BCT",
+    yellow: "400K followers",
+    red: "terminated"
+  },
+  gambling_account: {
+    header: "GAMBLING ACCOUNT REMOVED",
+    desc: "A Facebook account amassing 60K followers has been terminated for promoting illegal online gambling and betting by Team BCT",
+    yellow: "60K followers",
+    red: "terminated"
+  },
+  scammer_page: {
+    header: "SCAMMER PAGE REMOVED",
+    desc: "A Facebook page amassing 150K followers has been terminated for scamming and fraudulent financial activities by Team BCT",
+    yellow: "150K followers",
+    red: "terminated"
+  },
+  scammer_account: {
+    header: "SCAMMER ACCOUNT REMOVED",
+    desc: "A Facebook account amassing 45K followers has been terminated for scamming and fraudulent financial activities by Team BCT",
+    yellow: "45K followers",
+    red: "terminated"
+  }
+};
+
+//  Core Setup 
+const canvas = document.getElementById('mainCanvas');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
+const W = 1080, H = 1080;
+canvas.width = W; canvas.height = H;
+
+// Offscreen canvases
+const baseCanvas = document.createElement('canvas'); baseCanvas.width = W; baseCanvas.height = H;
+const bCtx = baseCanvas.getContext('2d', { willReadFrequently: true });
+
+const paintCanvas = document.createElement('canvas'); paintCanvas.width = W; paintCanvas.height = H;
+const pCtx = paintCanvas.getContext('2d');
+
+//  State 
+let logoImg = null;
+let showLogo = true;
+let activeTool = 'text';
+let paintMode = 'blur';
+let paintHistory = [];
+
+let p1Img = null, p2Img = null;
+
+// Exact Geometrical Ratios based on Red Tactical layout (1080x1080)
+const CARD_LAYOUT = {
+  boxX: 120,          
+  boxY: 80,           
+  boxW: 840,          
+  boxH: 190,          // Fixed height to prevent overlapping
+  boxR: 0,            // Hexagonal Angled Corner style
+
+  badgeW: 560,
+  badgeH: 56,
+
+  photosY: 310,       
+  photosH: 720,       
+  photosW: 460,       
+  photosGap: 40       
+};
+
+// Ensure font is loaded
+document.fonts.ready.then(() => {
+  onCategoryChange(); 
+});
+
+//  Dropdown Handler 
+function onCategoryChange() {
+  const cat = document.getElementById('categorySelect').value;
+  if(textPresets[cat]) {
+    document.getElementById('headerText').value = textPresets[cat].header;
+    document.getElementById('mainText').value = textPresets[cat].desc;
+    document.getElementById('hlText').value = textPresets[cat].yellow;
+    document.getElementById('stText').value = textPresets[cat].red;
+  }
+  renderFull();
+}
+
+//  Logo Initialization 
+const logoTry = new Image();
+logoTry.crossOrigin = 'anonymous';
+logoTry.onload = () => { logoImg = logoTry; renderFull(); };
+logoTry.src = 'https://i.ibb.co/Y72LMbdQ/20260502-163657.png';
+
+//  Photo Loading 
+function loadPhoto(input, n) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      if(n === 1) p1Img = img; else p2Img = img;
+      document.getElementById('prev'+n).src = e.target.result;
+      document.getElementById('slot'+n).classList.add('loaded');
+      renderFull();
+      msg('Evidence ' + n + ' loaded into red tactical framework.', 'ok');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+// Helper: Hexagonal/Angled shape
+function drawAngledRect(context, x, y, w, h, angleSize) {
+  context.beginPath();
+  context.moveTo(x + angleSize, y);
+  context.lineTo(x + w - angleSize, y);
+  context.lineTo(x + w, y + angleSize);
+  context.lineTo(x + w, y + h - angleSize);
+  context.lineTo(x + w - angleSize, y + h);
+  context.lineTo(x + angleSize, y + h);
+  context.lineTo(x, y + h - angleSize);
+  context.lineTo(x, y + angleSize);
+  context.closePath();
+}
+
+// Helper: Custom Red Tech bracket borders
+function drawTechBrackets(context, x, y, w, h, size) {
+  context.strokeStyle = '#ff123f'; // Red neon bracket
+  context.lineWidth = 4;
+  
+  // Top-Left Corner
+  context.beginPath();
+  context.moveTo(x + size, y);
+  context.lineTo(x, y);
+  context.lineTo(x, y + size);
+  context.stroke();
+
+  // Top-Right Corner
+  context.beginPath();
+  context.moveTo(x + w - size, y);
+  context.lineTo(x + w, y);
+  context.lineTo(x + w, y + size);
+  context.stroke();
+
+  // Bottom-Left Corner
+  context.beginPath();
+  context.moveTo(x + size, y + h);
+  context.lineTo(x, y + h);
+  context.lineTo(x, y + h - size);
+  context.stroke();
+
+  // Bottom-Right Corner
+  context.beginPath();
+  context.moveTo(x + w - size, y + h);
+  context.lineTo(x + w, y + h);
+  context.lineTo(x + w, y + h - size);
+  context.stroke();
+}
+
+//  Red Cyber-Tech Canvas Draw Engine 
+function drawCardBackground() {
+  bCtx.clearRect(0,0,W,H);
+
+  // 1. Digital Neon Deep Red Space Background
+  let radGrad = bCtx.createRadialGradient(W/2, H/2, 50, W/2, H/2, 800);
+  radGrad.addColorStop(0, '#1a0206');
+  radGrad.addColorStop(0.6, '#060002');
+  radGrad.addColorStop(1, '#020000');
+  bCtx.fillStyle = radGrad;
+  bCtx.fillRect(0,0,W,H);
+
+  // 2. Draw Digital Grid Lines (Neon Red tactical feel)
+  bCtx.save();
+  bCtx.strokeStyle = 'rgba(255, 18, 63, 0.04)';
+  bCtx.lineWidth = 1;
+  const gridSize = 45;
+  for(let x=0; x<W; x+=gridSize) {
+    bCtx.beginPath(); bCtx.moveTo(x, 0); bCtx.lineTo(x, H); bCtx.stroke();
+  }
+  for(let y=0; y<H; y+=gridSize) {
+    bCtx.beginPath(); bCtx.moveTo(0, y); bCtx.lineTo(W, y); bCtx.stroke();
+  }
+  bCtx.restore();
+
+  // 3. Draw ANGLED RED DESCRIPTION BOX (Hexagonal military structure)
+  bCtx.save();
+  drawAngledRect(bCtx, CARD_LAYOUT.boxX, CARD_LAYOUT.boxY, CARD_LAYOUT.boxW, CARD_LAYOUT.boxH, 20);
+  bCtx.lineWidth = 3;
+  bCtx.strokeStyle = '#ff123f'; // Red Neon Stroke
+  bCtx.fillStyle = 'rgba(10, 1, 3, 0.88)';
+  bCtx.fill();
+  bCtx.stroke();
+  
+  // Outer decorative tech sub-lines
+  bCtx.strokeStyle = 'rgba(255, 18, 63, 0.25)';
+  bCtx.lineWidth = 1;
+  bCtx.beginPath();
+  bCtx.moveTo(CARD_LAYOUT.boxX - 10, CARD_LAYOUT.boxY + 40);
+  bCtx.lineTo(CARD_LAYOUT.boxX - 10, CARD_LAYOUT.boxY + CARD_LAYOUT.boxH - 40);
+  bCtx.moveTo(CARD_LAYOUT.boxX + CARD_LAYOUT.boxW + 10, CARD_LAYOUT.boxY + 40);
+  bCtx.lineTo(CARD_LAYOUT.boxX + CARD_LAYOUT.boxW + 10, CARD_LAYOUT.boxY + CARD_LAYOUT.boxH - 40);
+  bCtx.stroke();
+  bCtx.restore();
+
+  // 4. Draw Angled Tech Header Pill Badge
+  const badgeX = (W - CARD_LAYOUT.badgeW) / 2;
+  const badgeY = CARD_LAYOUT.boxY - (CARD_LAYOUT.badgeH / 2);
+
+  bCtx.save();
+  drawAngledRect(bCtx, badgeX, badgeY, CARD_LAYOUT.badgeW, CARD_LAYOUT.badgeH, 12);
+  bCtx.fillStyle = '#ff123f'; // Sharp Neon Red
+  bCtx.shadowColor = 'rgba(255, 18, 63, 0.5)';
+  bCtx.shadowBlur = 12;
+  bCtx.fill();
+  
+  // Red side notches
+  bCtx.fillStyle = '#ff3b5f';
+  bCtx.fillRect(badgeX - 15, badgeY + CARD_LAYOUT.badgeH/2 - 4, 10, 8);
+  bCtx.fillRect(badgeX + CARD_LAYOUT.badgeW + 5, badgeY + CARD_LAYOUT.badgeH/2 - 4, 10, 8);
+  bCtx.restore();
+
+  // 5. Draw Photo Frames (Perfect Fit Below the Box)
+  const frameX1 = (W - (CARD_LAYOUT.photosW * 2 + CARD_LAYOUT.photosGap)) / 2;
+  const frameX2 = frameX1 + CARD_LAYOUT.photosW + CARD_LAYOUT.photosGap;
+
+  const box1 = { x: frameX1, y: CARD_LAYOUT.photosY, w: CARD_LAYOUT.photosW, h: CARD_LAYOUT.photosH };
+  const box2 = { x: frameX2, y: CARD_LAYOUT.photosY, w: CARD_LAYOUT.photosW, h: CARD_LAYOUT.photosH };
+
+  // Render the Photo slots with tech brackets
+  [ {img:p1Img, b:box1}, {img:p2Img, b:box2} ].forEach((slot, idx) => {
+    bCtx.save();
+    
+    // Draw plain bounding rect path
+    bCtx.beginPath();
+    bCtx.rect(slot.b.x, slot.b.y, slot.b.w, slot.b.h);
+    
+    if(slot.img) {
+      bCtx.save();
+      bCtx.clip();
+      bCtx.imageSmoothingEnabled = true;
+      bCtx.imageSmoothingQuality = 'high';
+      
+      const scale = Math.max(slot.b.w / slot.img.width, slot.b.h / slot.img.height);
+      const w = slot.img.width * scale;
+      const h = slot.img.height * scale;
+      const dx = slot.b.x + (slot.b.w - w) / 2;
+      const dy = slot.b.y + (slot.b.h - h) / 2;
+      
+      bCtx.drawImage(slot.img, dx, dy, w, h);
+      bCtx.restore();
+
+      // Cyber-Red Stroke over the frame
+      bCtx.lineWidth = 4;
+      bCtx.strokeStyle = 'rgba(255, 18, 63, 0.4)';
+      bCtx.stroke();
+    } else {
+      bCtx.fillStyle = 'rgba(255, 18, 63, 0.02)';
+      bCtx.fill();
+      bCtx.lineWidth = 1;
+      bCtx.strokeStyle = 'rgba(255, 18, 63, 0.2)';
+      bCtx.stroke();
+
+      // Red crosshair lines inside empty frame
+      bCtx.strokeStyle = 'rgba(255, 18, 63, 0.08)';
+      bCtx.beginPath();
+      bCtx.moveTo(slot.b.x, slot.b.y); bCtx.lineTo(slot.b.x + slot.b.w, slot.b.y + slot.b.h);
+      bCtx.moveTo(slot.b.x + slot.b.w, slot.b.y); bCtx.lineTo(slot.b.x, slot.b.y + slot.b.h);
+      bCtx.stroke();
+
+      // UI Text Info
+      bCtx.fillStyle = 'rgba(255, 18, 63, 0.35)';
+      bCtx.font = "bold 15px 'Share Tech Mono', monospace";
+      bCtx.textAlign = 'center';
+      bCtx.fillText(`[ CAPTURED_SOURCE_0${idx+1} ]`, slot.b.x + slot.b.w/2, slot.b.y + slot.b.h/2);
+    }
+    
+    // Neon Red corner brackets
+    drawTechBrackets(bCtx, slot.b.x, slot.b.y, slot.b.w, slot.b.h, 25);
+    
+    bCtx.restore();
+  });
+}
+
+function renderFull() {
+  drawCardBackground();
+
+  ctx.clearRect(0,0,W,H);
+  ctx.drawImage(baseCanvas, 0, 0);
+  ctx.drawImage(paintCanvas, 0, 0); 
+
+  // Draw Header text inside the badge (Futuristic font)
+  const headerRaw = document.getElementById('headerText').value.trim();
+  if(headerRaw) {
+    ctx.save();
+    ctx.font = "700 24px 'Share Tech Mono', monospace";
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.letterSpacing = "2px";
+    ctx.fillText(headerRaw.toUpperCase(), W/2, CARD_LAYOUT.boxY); 
+    ctx.restore();
+  }
+
+  // Draw paragraph beautifully fitted in the box
+  drawFixedParagraph();
+  
+  // Draw tech emblem crest in the photo background space
+  if(showLogo && logoImg) {
+    ctx.save();
+    ctx.globalAlpha = 0.08;
+    const ls = 340;
+    const logoY = CARD_LAYOUT.photosY + (CARD_LAYOUT.photosH / 2) - (ls / 2);
+    ctx.drawImage(logoImg, (W-ls)/2, logoY, ls, ls);
+    ctx.restore();
+  }
+}
+
+//  Red Tactical Paragraph Auto-fitting Mechanics 
+function drawFixedParagraph() {
+  const textRaw = document.getElementById('mainText').value.trim();
+  if(!textRaw) return;
+
+  const hwList = document.getElementById('hlText').value.split(',').map(s=>s.trim()).filter(s=>s);
+  const swList = document.getElementById('stText').value.split(',').map(s=>s.trim()).filter(s=>s);
+
+  let segments = [{ text: textRaw, style: 'normal' }];
+  
+  function applyStyle(list, styleName) {
+    list.forEach(word => {
+      if(!word) return;
+      let nextSegs = [];
+      segments.forEach(seg => {
+        if(seg.style !== 'normal') { nextSegs.push(seg); return; }
+        let parts = seg.text.split(word);
+        for(let i=0; i<parts.length; i++) {
+          if(parts[i]) nextSegs.push({ text: parts[i], style: 'normal' });
+          if(i < parts.length - 1) nextSegs.push({ text: word, style: styleName });
+        }
+      });
+      segments = nextSegs;
+    });
+  }
+  
+  applyStyle(hwList, 'highlight');
+  applyStyle(swList, 'redtext');
+
+  let tokens = [];
+  segments.forEach(seg => {
+    let regex = /(\s+|\S+)/g;
+    let match;
+    while ((match = regex.exec(seg.text)) !== null) {
+      if(match[0].length > 0) {
+        tokens.push({ text: match[0], style: seg.style, isSpace: /^\s+$/.test(match[0]) });
+      }
+    }
+  });
+
+  ctx.save();
+  
+  let fontSize = 34;
+  let lineHeight = 44;
+  let lines = [];
+  const maxAllowW = CARD_LAYOUT.boxW - 70; // Inner safety padding
+  const maxAllowH = CARD_LAYOUT.boxH - 60; 
+
+  while (fontSize > 16) {
+    ctx.font = `600 ${fontSize}px 'Exo 2', sans-serif`;
+    lines = [];
+    let currentLine = [], currentW = 0;
+
+    for (let i = 0; i < tokens.length; i++) {
+      let tok = tokens[i];
+      if(tok.text.includes('\n')) {
+        lines.push({ words: currentLine, w: currentW });
+        currentLine = []; currentW = 0; continue;
+      }
+      let tw = ctx.measureText(tok.text).width;
+      if(!tok.isSpace && currentW + tw > maxAllowW && currentLine.length > 0) {
+        if(currentLine[currentLine.length-1].isSpace) {
+          currentW -= currentLine[currentLine.length-1].w;
+          currentLine.pop();
+        }
+        lines.push({ words: currentLine, w: currentW });
+        currentLine = []; currentW = 0;
+      }
+      currentLine.push({ ...tok, w: tw });
+      currentW += tw;
+    }
+    if(currentLine.length > 0) {
+      if(currentLine[currentLine.length-1].isSpace) {
+        currentW -= currentLine[currentLine.length-1].w;
+        currentLine.pop();
+      }
+      lines.push({ words: currentLine, w: currentW });
+    }
+
+    let totalH = lines.length * lineHeight;
+    if (totalH <= maxAllowH) {
+      break; 
+    }
+
+    fontSize -= 2;
+    lineHeight -= 2.5;
+  }
+
+  const totalH = lines.length * lineHeight;
+  let startY = CARD_LAYOUT.boxY + (CARD_LAYOUT.boxH / 2) - (totalH / 2) + (lineHeight / 2) + 12; 
+  ctx.textBaseline = 'middle';
+
+  lines.forEach((line, i) => {
+    let x = (W - line.w) / 2;
+    let y = startY + i * lineHeight;
+
+    line.words.forEach(item => {
+      ctx.fillStyle = '#ffffff';
+      if(item.style === 'highlight') {
+        ctx.fillStyle = '#ffea00'; // Neon Gold/Yellow
+      } else if (item.style === 'redtext') {
+        ctx.fillStyle = '#ff123f'; // Glowing Neon Red status
+      }
+      ctx.fillText(item.text, x, y);
+      x += item.w;
+    });
+  });
+
+  ctx.restore();
+}
+
+//  UI Control Systems 
+function toggleLogo() {
+  showLogo = !showLogo;
+  document.getElementById('logoBtn').classList.toggle('active-gold', showLogo);
+  renderFull();
+}
+
+function setTool(tool) {
+  activeTool = tool;
+  document.getElementById('btnText').classList.toggle('active', tool==='text');
+  document.getElementById('btnPaint').classList.toggle('active', tool==='paint');
+  canvas.className = tool === 'paint' ? 'tool-paint' : '';
+  
+  document.getElementById('textSettings').classList.toggle('open', tool==='text');
+  document.getElementById('paintSettings').classList.toggle('open', tool==='paint');
+}
+
+function setPaintMode(m) {
+  paintMode = m;
+  document.getElementById('modeBlur').classList.toggle('sel', m==='blur');
+  document.getElementById('modeMosaic').classList.toggle('sel', m==='mosaic');
+}
+
+//  Red Sensor Tech Brush Paint Engine 
+function getPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = W / rect.width;
+  const scaleY = H / rect.height;
+  const src = e.touches ? e.touches[0] : e;
+  return { x: (src.clientX - rect.left) * scaleX, y: (src.clientY - rect.top) * scaleY };
+}
+
+let painting = false;
+
+canvas.addEventListener('mousedown', handleStart);
+canvas.addEventListener('touchstart', handleStart, {passive:false});
+canvas.addEventListener('mousemove', handleMove);
+canvas.addEventListener('touchmove', handleMove, {passive:false});
+canvas.addEventListener('mouseup', handleEnd);
+canvas.addEventListener('touchend', handleEnd);
+
+function handleStart(e) {
+  if(activeTool !== 'paint') return;
+  if(e.cancelable) e.preventDefault();
+  painting = true;
+  savePaintHistory();
+  const {x, y} = getPos(e);
+  doPaint(x, y);
+}
+function handleMove(e) {
+  if(!painting || activeTool !== 'paint') return;
+  if(e.cancelable) e.preventDefault();
+  const {x, y} = getPos(e);
+  doPaint(x, y);
+}
+function handleEnd() { painting = false; }
+
+function doPaint(cx, cy) {
+  const r = parseInt(document.getElementById('brushSize').value);
+  
+  const sampleCanvas = document.createElement('canvas');
+  sampleCanvas.width = W; sampleCanvas.height = H;
+  const sCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
+  sCtx.drawImage(baseCanvas, 0, 0);
+  sCtx.drawImage(paintCanvas, 0, 0);
+
+  const x1 = Math.max(0, cx-r|0), y1 = Math.max(0, cy-r|0);
+  const x2 = Math.min(W, cx+r|0), y2 = Math.min(H, cy+r|0);
+  const w = x2-x1, h = y2-y1;
+  if(w<=0 || h<=0) return;
+
+  if(paintMode === 'blur') {
+    const patch = document.createElement('canvas'); patch.width = w; patch.height = h;
+    const ptCtx = patch.getContext('2d');
+    ptCtx.filter = `blur(${Math.round(r*0.25)}px)`;
+    ptCtx.drawImage(sampleCanvas, x1, y1, w, h, 0, 0, w, h);
+
+    pCtx.save();
+    pCtx.beginPath(); pCtx.arc(cx, cy, r, 0, Math.PI*2); pCtx.clip();
+    pCtx.drawImage(patch, x1, y1);
+    pCtx.restore();
+  } else {
+    const block = Math.max(8, Math.round(r*0.35));
+    pCtx.save();
+    pCtx.beginPath(); pCtx.arc(cx, cy, r, 0, Math.PI*2); pCtx.clip();
+    
+    for(let bx=x1; bx<x2; bx+=block) {
+      for(let by=y1; by<y2; by+=block) {
+        const bw = Math.min(block, x2-bx), bh = Math.min(block, y2-by);
+        const imgData = sCtx.getImageData(bx, by, bw, bh).data;
+        let rr=0, gg=0, bb=0, count=0;
+        for(let i=0; i<imgData.length; i+=4) { rr+=imgData[i]; gg+=imgData[i+1]; bb+=imgData[i+2]; count++; }
+        if(count>0) {
+          pCtx.fillStyle = `rgb(${rr/count},${gg/count},${bb/count})`;
+          pCtx.fillRect(bx, by, bw+1, bh+1);
+        }
+      }
+    }
+    pCtx.restore();
+  }
+  renderFull();
+}
+
+function savePaintHistory() {
+  paintHistory.push(pCtx.getImageData(0,0,W,H));
+  if(paintHistory.length > 10) paintHistory.shift();
+}
+function undoPaint() {
+  if(!paintHistory.length) return;
+  pCtx.putImageData(paintHistory.pop(), 0, 0);
+  renderFull();
+}
+function clearPaint() {
+  pCtx.clearRect(0,0,W,H);
+  paintHistory = [];
+  renderFull();
+}
+
+function downloadCard() {
+  if(!p1Img && !p2Img) { msg('Please upload at least one system image.', 'err'); return; }
+  const a = document.createElement('a');
+  a.download = 'BCT_RedCyberTech_Card_' + Date.now() + '.jpg';
+  a.href = canvas.toDataURL('image/jpeg', 0.95);
+  a.click();
+  msg('Red Cyber Card exported successfully!', 'ok');
+}
+
+function msg(text) { document.getElementById('status').textContent = text; }
+</script>
+</body>
+</html>
