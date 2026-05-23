@@ -41,7 +41,7 @@ body {
   flex-direction: column;
 }
 
-/*  HEADER  */
+/* ── HEADER ── */
 .header {
   padding: 16px 16px 14px;
   background: linear-gradient(180deg, rgba(20, 2, 5, 0.95) 0%, rgba(8, 1, 2, 0.9) 100%);
@@ -63,7 +63,7 @@ body {
 .header-title em { font-style:normal; color: var(--gold); }
 .header-sub { font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 4px; color: var(--text-secondary); margin-top: 2px; }
 
-/*  CANVAS AREA  */
+/* ── CANVAS AREA ── */
 .canvas-wrap { padding: 14px 14px 0; }
 .canvas-outer {
   position: relative; border-radius: var(--radius); overflow: hidden;
@@ -74,7 +74,7 @@ body {
 }
 #mainCanvas.tool-paint { cursor: crosshair; }
 
-/*  DASHBOARD  */
+/* ── DASHBOARD ── */
 .dashboard { flex:1; padding: 14px; display:flex; flex-direction:column; gap: 14px; }
 .sec-label {
   font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 700;
@@ -103,9 +103,9 @@ body {
 .tool-row:last-child { border-bottom:none; }
 
 .tool-btn {
-  flex:1; padding: 12px 10px; background:transparent; border:none; border-right: 1px solid var(--border-dim);
+  flex:1; padding: 12px 6px; background:transparent; border:none; border-right: 1px solid var(--border-dim);
   color: var(--text-secondary); font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700;
-  letter-spacing: 1px; text-transform: uppercase; cursor:pointer; display:flex; align-items:center; justify-content:center; gap: 6px;
+  letter-spacing: 1px; text-transform: uppercase; cursor:pointer; display:flex; align-items:center; justify-content:center; gap: 4px;
 }
 .tool-btn:last-child { border-right:none; }
 .tool-btn.active { color: var(--text-primary); background: rgba(255, 18, 63, 0.12); }
@@ -117,7 +117,7 @@ body {
 
 /* Inputs */
 .input-group { display:flex; flex-direction:column; gap:4px; }
-.input-group label { font-family: 'Rajdhani', sans-serif; font-size: 10px; color: var(--text-dim); text-transform:uppercase; letter-spacing:1px;}
+.input-group label { font-family: 'Rajdhani', sans-serif; font-size: 10px; color: var(--text-dim); text-transform:uppercase; letter-spacing:1px; display:flex; justify-content:space-between;}
 .input-box {
   width:100%; background:rgba(255,255,255,0.02); border:1px solid rgba(255, 18, 63, 0.2);
   border-radius:6px; color:#fff; font-family:'Exo 2', sans-serif; font-size:14px; font-weight:500; padding:10px;
@@ -143,8 +143,8 @@ textarea.input-box { resize:vertical; min-height:75px; }
 .mode-tab { flex:1; padding:8px; background:rgba(255,255,255,0.05); border:none; border-radius:4px; color:var(--text-secondary); font-size:11px; font-weight:700; cursor:pointer;}
 .mode-tab.sel { background:var(--neon-red); color:#ffffff; }
 input[type="file"] { display:none; }
-input[type=range].mini-range { flex:1; height:4px; -webkit-appearance:none; background:rgba(255,255,255,0.1); border-radius:2px; }
-input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--text-secondary); cursor:pointer;}
+input[type=range].mini-range { flex:1; height:4px; -webkit-appearance:none; background:rgba(255, 18, 63, 0.2); border-radius:2px; margin: 8px 0;}
+input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--neon-red); cursor:pointer; box-shadow: 0 0 5px rgba(255,18,63,0.5);}
 </style>
 </head>
 <body>
@@ -153,10 +153,10 @@ input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; wi
 <div class="header">
   <div class="header-top">
     <div class="header-badge">RED INTEL</div>
-    <div class="header-version">v4.0 TECH RED</div>
+    <div class="header-version">v4.5 TECH RED</div>
   </div>
   <div class="header-title">TACTICAL <em>GENERATOR</em></div>
-  <div class="header-sub">AL HARAS UNIT � BANGLADESH CYBER TROOPS</div>
+  <div class="header-sub">AL HARAS UNIT · BANGLADESH CYBER TROOPS</div>
 </div>
 
 <!-- CANVAS -->
@@ -190,8 +190,9 @@ input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; wi
     <div class="tool-panel">
 
       <div class="tool-row">
-        <button class="tool-btn active" id="btnText" onclick="setTool('text')"> Intel Text</button>
-        <button class="tool-btn" id="btnPaint" onclick="setTool('paint')"> Red Tech Brush</button>
+        <button class="tool-btn active" id="btnText" onclick="setTool('text')">⚡ Text</button>
+        <button class="tool-btn" id="btnImage" onclick="setTool('image')">🖼 Setup</button>
+        <button class="tool-btn" id="btnPaint" onclick="setTool('paint')">🖌 Paint</button>
       </div>
       
       <!-- Text Panel -->
@@ -232,6 +233,29 @@ input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; wi
         </div>
       </div>
 
+      <!-- Image Adjust Panel -->
+      <div class="settings-block" id="imageSettings">
+        <div class="mode-tabs">
+          <button class="mode-tab sel" id="tabEv1" onclick="selectEv(1)">EVIDENCE 1</button>
+          <button class="mode-tab" id="tabEv2" onclick="selectEv(2)">EVIDENCE 2</button>
+        </div>
+        <div style="font-size: 11px; color:var(--text-dim); text-align:center; margin-bottom: 5px;">
+          Use sliders to fix photo zoom and X/Y positions
+        </div>
+        <div class="input-group">
+          <label>Zoom Level <span id="valZoom">100%</span></label>
+          <input type="range" class="mini-range" id="adjZoom" min="100" max="300" value="100" oninput="updateImageState()">
+        </div>
+        <div class="input-group">
+          <label>Pan X (Left ↔ Right) <span id="valX">Center</span></label>
+          <input type="range" class="mini-range" id="adjX" min="0" max="100" value="50" oninput="updateImageState()">
+        </div>
+        <div class="input-group">
+          <label>Pan Y (Up ↕ Down) <span id="valY">Center</span></label>
+          <input type="range" class="mini-range" id="adjY" min="0" max="100" value="50" oninput="updateImageState()">
+        </div>
+      </div>
+
       <!-- Paint Panel -->
       <div class="settings-block" id="paintSettings">
         <div class="mode-tabs">
@@ -243,13 +267,13 @@ input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; wi
           <input type="range" class="mini-range" id="brushSize" min="10" max="80" value="40">
         </div>
         <div style="display:flex; gap:10px;">
-          <button class="mode-tab" onclick="undoPaint()" style="background:rgba(255,255,255,0.05); color:#fff;"> UNDO</button>
-          <button class="mode-tab" onclick="clearPaint()" style="background:rgba(255, 18, 63, 0.15); color:var(--neon-red-bright)"> PURGE SENSORS</button>
+          <button class="mode-tab" onclick="undoPaint()" style="background:rgba(255,255,255,0.05); color:#fff;">↺ UNDO</button>
+          <button class="mode-tab" onclick="clearPaint()" style="background:rgba(255, 18, 63, 0.15); color:var(--neon-red-bright)">✖ PURGE SENSORS</button>
         </div>
       </div>
 
       <div class="tool-row">
-        <button class="tool-btn active-gold" id="logoBtn" onclick="toggleLogo()"> Toggle Tactical Crest</button>
+        <button class="tool-btn active-gold" id="logoBtn" onclick="toggleLogo()">🛡 Toggle Tactical Crest</button>
       </div>
 
     </div>
@@ -265,84 +289,32 @@ input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; wi
 <input type="file" id="photo2In" accept="image/*" onchange="loadPhoto(this,2)">
 
 <script>
-//  Presets Database (Exact Matching English Format) 
+// ── Presets Database ──
 const textPresets = {
-  obscene_account: {
-    header: "OBSCENE ACCOUNT REMOVED",
-    desc: "An Facebook account/page amassing 136K followers has been terminated for disseminating obscene and indecent content by Team BCT",
-    yellow: "136K followers",
-    red: "terminated"
-  },
-  obscene_page: {
-    header: "OBSCENE PAGE REMOVED",
-    desc: "An Facebook page amassing 250K followers has been terminated for disseminating obscene and indecent content by Team BCT",
-    yellow: "250K followers",
-    red: "terminated"
-  },
-  atheist_account: {
-    header: "ATHEIST ACCOUNT REMOVED",
-    desc: "A Facebook account amassing 50K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT",
-    yellow: "50K followers",
-    red: "terminated"
-  },
-  atheist_page: {
-    header: "ATHEIST PAGE REMOVED",
-    desc: "A Facebook page amassing 100K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT",
-    yellow: "100K followers",
-    red: "terminated"
-  },
-  anti_islam_account: {
-    header: "ANTI-ISLAMIC ACCOUNT REMOVED",
-    desc: "A Facebook account amassing 80K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT",
-    yellow: "80K followers",
-    red: "terminated"
-  },
-  anti_islam_page: {
-    header: "ANTI-ISLAMIC PAGE REMOVED",
-    desc: "A Facebook page amassing 300K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT",
-    yellow: "300K followers",
-    red: "terminated"
-  },
-  gambling_page: {
-    header: "GAMBLING PAGE REMOVED",
-    desc: "A Facebook page amassing 400K followers has been terminated for promoting illegal online gambling and betting by Team BCT",
-    yellow: "400K followers",
-    red: "terminated"
-  },
-  gambling_account: {
-    header: "GAMBLING ACCOUNT REMOVED",
-    desc: "A Facebook account amassing 60K followers has been terminated for promoting illegal online gambling and betting by Team BCT",
-    yellow: "60K followers",
-    red: "terminated"
-  },
-  scammer_page: {
-    header: "SCAMMER PAGE REMOVED",
-    desc: "A Facebook page amassing 150K followers has been terminated for scamming and fraudulent financial activities by Team BCT",
-    yellow: "150K followers",
-    red: "terminated"
-  },
-  scammer_account: {
-    header: "SCAMMER ACCOUNT REMOVED",
-    desc: "A Facebook account amassing 45K followers has been terminated for scamming and fraudulent financial activities by Team BCT",
-    yellow: "45K followers",
-    red: "terminated"
-  }
+  obscene_account: { header: "OBSCENE ACCOUNT REMOVED", desc: "An Facebook account/page amassing 136K followers has been terminated for disseminating obscene and indecent content by Team BCT", yellow: "136K followers", red: "terminated" },
+  obscene_page: { header: "OBSCENE PAGE REMOVED", desc: "An Facebook page amassing 250K followers has been terminated for disseminating obscene and indecent content by Team BCT", yellow: "250K followers", red: "terminated" },
+  atheist_account: { header: "ATHEIST ACCOUNT REMOVED", desc: "A Facebook account amassing 50K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT", yellow: "50K followers", red: "terminated" },
+  atheist_page: { header: "ATHEIST PAGE REMOVED", desc: "A Facebook page amassing 100K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT", yellow: "100K followers", red: "terminated" },
+  anti_islam_account: { header: "ANTI-ISLAMIC ACCOUNT REMOVED", desc: "A Facebook account amassing 80K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT", yellow: "80K followers", red: "terminated" },
+  anti_islam_page: { header: "ANTI-ISLAMIC PAGE REMOVED", desc: "A Facebook page amassing 300K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT", yellow: "300K followers", red: "terminated" },
+  gambling_page: { header: "GAMBLING PAGE REMOVED", desc: "A Facebook page amassing 400K followers has been terminated for promoting illegal online gambling and betting by Team BCT", yellow: "400K followers", red: "terminated" },
+  gambling_account: { header: "GAMBLING ACCOUNT REMOVED", desc: "A Facebook account amassing 60K followers has been terminated for promoting illegal online gambling and betting by Team BCT", yellow: "60K followers", red: "terminated" },
+  scammer_page: { header: "SCAMMER PAGE REMOVED", desc: "A Facebook page amassing 150K followers has been terminated for scamming and fraudulent financial activities by Team BCT", yellow: "150K followers", red: "terminated" },
+  scammer_account: { header: "SCAMMER ACCOUNT REMOVED", desc: "A Facebook account amassing 45K followers has been terminated for scamming and fraudulent financial activities by Team BCT", yellow: "45K followers", red: "terminated" }
 };
 
-//  Core Setup 
+// ── Core Setup ──
 const canvas = document.getElementById('mainCanvas');
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const W = 1080, H = 1080;
 canvas.width = W; canvas.height = H;
 
-// Offscreen canvases
 const baseCanvas = document.createElement('canvas'); baseCanvas.width = W; baseCanvas.height = H;
 const bCtx = baseCanvas.getContext('2d', { willReadFrequently: true });
-
 const paintCanvas = document.createElement('canvas'); paintCanvas.width = W; paintCanvas.height = H;
 const pCtx = paintCanvas.getContext('2d');
 
-//  State 
+// ── State ──
 let logoImg = null;
 let showLogo = true;
 let activeTool = 'text';
@@ -350,30 +322,18 @@ let paintMode = 'blur';
 let paintHistory = [];
 
 let p1Img = null, p2Img = null;
+// Image adjustment states
+let pStates = [ { zoom: 100, x: 50, y: 50 }, { zoom: 100, x: 50, y: 50 } ];
+let activeEv = 1;
 
-// Exact Geometrical Ratios based on Red Tactical layout (1080x1080)
 const CARD_LAYOUT = {
-  boxX: 120,          
-  boxY: 80,           
-  boxW: 840,          
-  boxH: 190,          // Fixed height to prevent overlapping
-  boxR: 0,            // Hexagonal Angled Corner style
-
-  badgeW: 560,
-  badgeH: 56,
-
-  photosY: 310,       
-  photosH: 720,       
-  photosW: 460,       
-  photosGap: 40       
+  boxX: 120, boxY: 80, boxW: 840, boxH: 190,
+  badgeW: 560, badgeH: 56,
+  photosY: 310, photosH: 720, photosW: 460, photosGap: 40       
 };
 
-// Ensure font is loaded
-document.fonts.ready.then(() => {
-  onCategoryChange(); 
-});
+document.fonts.ready.then(() => { onCategoryChange(); });
 
-//  Dropdown Handler 
 function onCategoryChange() {
   const cat = document.getElementById('categorySelect').value;
   if(textPresets[cat]) {
@@ -385,13 +345,12 @@ function onCategoryChange() {
   renderFull();
 }
 
-//  Logo Initialization 
 const logoTry = new Image();
 logoTry.crossOrigin = 'anonymous';
 logoTry.onload = () => { logoImg = logoTry; renderFull(); };
 logoTry.src = 'https://i.ibb.co/Y72LMbdQ/20260502-163657.png';
 
-//  Photo Loading 
+// ── Photo Loading & Adjustment Setup ──
 function loadPhoto(input, n) {
   const file = input.files[0];
   if (!file) return;
@@ -399,11 +358,17 @@ function loadPhoto(input, n) {
   reader.onload = e => {
     const img = new Image();
     img.onload = () => {
-      if(n === 1) p1Img = img; else p2Img = img;
+      if(n === 1) { p1Img = img; pStates[0] = {zoom:100, x:50, y:50}; }
+      else { p2Img = img; pStates[1] = {zoom:100, x:50, y:50}; }
+      
       document.getElementById('prev'+n).src = e.target.result;
       document.getElementById('slot'+n).classList.add('loaded');
+      
+      // Auto switch to adjust panel
+      selectEv(n);
+      setTool('image');
       renderFull();
-      msg('Evidence ' + n + ' loaded into red tactical framework.', 'ok');
+      msg('Evidence ' + n + ' loaded. Adjust zoom/position in Setup.', 'ok');
     };
     img.src = e.target.result;
   };
@@ -411,89 +376,104 @@ function loadPhoto(input, n) {
   input.value = '';
 }
 
-// Helper: Hexagonal/Angled shape
+function selectEv(n) {
+  activeEv = n;
+  document.getElementById('tabEv1').classList.toggle('sel', n === 1);
+  document.getElementById('tabEv2').classList.toggle('sel', n === 2);
+  
+  const state = pStates[n-1];
+  document.getElementById('adjZoom').value = state.zoom;
+  document.getElementById('adjX').value = state.x;
+  document.getElementById('adjY').value = state.y;
+  updateLabels(state);
+}
+
+function updateImageState() {
+  const z = parseInt(document.getElementById('adjZoom').value);
+  const x = parseInt(document.getElementById('adjX').value);
+  const y = parseInt(document.getElementById('adjY').value);
+  
+  pStates[activeEv-1] = { zoom: z, x: x, y: y };
+  updateLabels(pStates[activeEv-1]);
+  renderFull();
+}
+
+function updateLabels(state) {
+  document.getElementById('valZoom').innerText = state.zoom + '%';
+  document.getElementById('valX').innerText = state.x === 50 ? 'Center' : state.x + '%';
+  document.getElementById('valY').innerText = state.y === 50 ? 'Center' : state.y + '%';
+}
+
+// Helper: Hexagonal shape
 function drawAngledRect(context, x, y, w, h, angleSize) {
   context.beginPath();
-  context.moveTo(x + angleSize, y);
-  context.lineTo(x + w - angleSize, y);
-  context.lineTo(x + w, y + angleSize);
-  context.lineTo(x + w, y + h - angleSize);
-  context.lineTo(x + w - angleSize, y + h);
-  context.lineTo(x + angleSize, y + h);
-  context.lineTo(x, y + h - angleSize);
-  context.lineTo(x, y + angleSize);
+  context.moveTo(x + angleSize, y); context.lineTo(x + w - angleSize, y);
+  context.lineTo(x + w, y + angleSize); context.lineTo(x + w, y + h - angleSize);
+  context.lineTo(x + w - angleSize, y + h); context.lineTo(x + angleSize, y + h);
+  context.lineTo(x, y + h - angleSize); context.lineTo(x, y + angleSize);
   context.closePath();
 }
 
-// Helper: Custom Red Tech bracket borders
+// Helper: Custom Red Tech brackets
 function drawTechBrackets(context, x, y, w, h, size) {
-  context.strokeStyle = '#ff123f'; // Red neon bracket
-  context.lineWidth = 4;
-  
-  // Top-Left Corner
-  context.beginPath();
-  context.moveTo(x + size, y);
-  context.lineTo(x, y);
-  context.lineTo(x, y + size);
-  context.stroke();
-
-  // Top-Right Corner
-  context.beginPath();
-  context.moveTo(x + w - size, y);
-  context.lineTo(x + w, y);
-  context.lineTo(x + w, y + size);
-  context.stroke();
-
-  // Bottom-Left Corner
-  context.beginPath();
-  context.moveTo(x + size, y + h);
-  context.lineTo(x, y + h);
-  context.lineTo(x, y + h - size);
-  context.stroke();
-
-  // Bottom-Right Corner
-  context.beginPath();
-  context.moveTo(x + w - size, y + h);
-  context.lineTo(x + w, y + h);
-  context.lineTo(x + w, y + h - size);
-  context.stroke();
+  context.strokeStyle = '#ff123f'; context.lineWidth = 4;
+  context.beginPath(); context.moveTo(x + size, y); context.lineTo(x, y); context.lineTo(x, y + size); context.stroke();
+  context.beginPath(); context.moveTo(x + w - size, y); context.lineTo(x + w, y); context.lineTo(x + w, y + size); context.stroke();
+  context.beginPath(); context.moveTo(x + size, y + h); context.lineTo(x, y + h); context.lineTo(x, y + h - size); context.stroke();
+  context.beginPath(); context.moveTo(x + w - size, y + h); context.lineTo(x + w, y + h); context.lineTo(x + w, y + h - size); context.stroke();
 }
 
-//  Red Cyber-Tech Canvas Draw Engine 
+// ── Red Cyber-Tech Draw Engine ──
 function drawCardBackground() {
   bCtx.clearRect(0,0,W,H);
 
-  // 1. Digital Neon Deep Red Space Background
-  let radGrad = bCtx.createRadialGradient(W/2, H/2, 50, W/2, H/2, 800);
-  radGrad.addColorStop(0, '#1a0206');
-  radGrad.addColorStop(0.6, '#060002');
-  radGrad.addColorStop(1, '#020000');
-  bCtx.fillStyle = radGrad;
+  // 1. Professional Deep Cyber Gradient
+  const grad = bCtx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, '#0a0103');
+  grad.addColorStop(0.5, '#150205');
+  grad.addColorStop(1, '#050001');
+  bCtx.fillStyle = grad;
   bCtx.fillRect(0,0,W,H);
 
-  // 2. Draw Digital Grid Lines (Neon Red tactical feel)
+  // 2. High-Tech Hexagonal Grid Pattern
   bCtx.save();
-  bCtx.strokeStyle = 'rgba(255, 18, 63, 0.04)';
-  bCtx.lineWidth = 1;
-  const gridSize = 45;
-  for(let x=0; x<W; x+=gridSize) {
-    bCtx.beginPath(); bCtx.moveTo(x, 0); bCtx.lineTo(x, H); bCtx.stroke();
+  bCtx.strokeStyle = 'rgba(255, 18, 63, 0.05)';
+  bCtx.lineWidth = 1.5;
+  const hexSize = 35;
+  const hexH = hexSize * Math.sqrt(3);
+  bCtx.beginPath();
+  for(let x = 0; x < W + hexSize; x += hexSize * 1.5) {
+    for(let y = 0; y < H + hexH; y += hexH) {
+      let cy = y + (Math.round(x / (hexSize * 1.5)) % 2 === 1 ? hexH / 2 : 0);
+      for(let i=0; i<6; i++) {
+        let angle = (60 * i) * (Math.PI / 180);
+        let px = x + hexSize * Math.cos(angle);
+        let py = cy + hexSize * Math.sin(angle);
+        if(i===0) bCtx.moveTo(px, py);
+        else bCtx.lineTo(px, py);
+      }
+      bCtx.closePath();
+    }
   }
-  for(let y=0; y<H; y+=gridSize) {
-    bCtx.beginPath(); bCtx.moveTo(0, y); bCtx.lineTo(W, y); bCtx.stroke();
-  }
+  bCtx.stroke();
+
+  // Background glow effect
+  let glow = bCtx.createRadialGradient(W/2, H/2, 100, W/2, H/2, 900);
+  glow.addColorStop(0, 'rgba(255, 18, 63, 0.12)');
+  glow.addColorStop(1, 'transparent');
+  bCtx.fillStyle = glow;
+  bCtx.fillRect(0,0,W,H);
   bCtx.restore();
 
-  // 3. Draw ANGLED RED DESCRIPTION BOX (Hexagonal military structure)
+  // 3. Draw ANGLED RED DESCRIPTION BOX
   bCtx.save();
   drawAngledRect(bCtx, CARD_LAYOUT.boxX, CARD_LAYOUT.boxY, CARD_LAYOUT.boxW, CARD_LAYOUT.boxH, 20);
   bCtx.lineWidth = 3;
-  bCtx.strokeStyle = '#ff123f'; // Red Neon Stroke
+  bCtx.strokeStyle = '#ff123f'; 
   bCtx.fillStyle = 'rgba(10, 1, 3, 0.88)';
   bCtx.fill();
   bCtx.stroke();
   
-  // Outer decorative tech sub-lines
   bCtx.strokeStyle = 'rgba(255, 18, 63, 0.25)';
   bCtx.lineWidth = 1;
   bCtx.beginPath();
@@ -504,35 +484,32 @@ function drawCardBackground() {
   bCtx.stroke();
   bCtx.restore();
 
-  // 4. Draw Angled Tech Header Pill Badge
+  // 4. Draw Angled Tech Header
   const badgeX = (W - CARD_LAYOUT.badgeW) / 2;
   const badgeY = CARD_LAYOUT.boxY - (CARD_LAYOUT.badgeH / 2);
 
   bCtx.save();
   drawAngledRect(bCtx, badgeX, badgeY, CARD_LAYOUT.badgeW, CARD_LAYOUT.badgeH, 12);
-  bCtx.fillStyle = '#ff123f'; // Sharp Neon Red
+  bCtx.fillStyle = '#ff123f'; 
   bCtx.shadowColor = 'rgba(255, 18, 63, 0.5)';
   bCtx.shadowBlur = 12;
   bCtx.fill();
   
-  // Red side notches
   bCtx.fillStyle = '#ff3b5f';
   bCtx.fillRect(badgeX - 15, badgeY + CARD_LAYOUT.badgeH/2 - 4, 10, 8);
   bCtx.fillRect(badgeX + CARD_LAYOUT.badgeW + 5, badgeY + CARD_LAYOUT.badgeH/2 - 4, 10, 8);
   bCtx.restore();
 
-  // 5. Draw Photo Frames (Perfect Fit Below the Box)
+  // 5. Draw Photo Frames (With Panning and Zoom)
   const frameX1 = (W - (CARD_LAYOUT.photosW * 2 + CARD_LAYOUT.photosGap)) / 2;
   const frameX2 = frameX1 + CARD_LAYOUT.photosW + CARD_LAYOUT.photosGap;
 
   const box1 = { x: frameX1, y: CARD_LAYOUT.photosY, w: CARD_LAYOUT.photosW, h: CARD_LAYOUT.photosH };
   const box2 = { x: frameX2, y: CARD_LAYOUT.photosY, w: CARD_LAYOUT.photosW, h: CARD_LAYOUT.photosH };
 
-  // Render the Photo slots with tech brackets
-  [ {img:p1Img, b:box1}, {img:p2Img, b:box2} ].forEach((slot, idx) => {
+  [ {img:p1Img, b:box1, s:pStates[0]}, {img:p2Img, b:box2, s:pStates[1]} ].forEach((slot, idx) => {
     bCtx.save();
     
-    // Draw plain bounding rect path
     bCtx.beginPath();
     bCtx.rect(slot.b.x, slot.b.y, slot.b.w, slot.b.h);
     
@@ -542,16 +519,24 @@ function drawCardBackground() {
       bCtx.imageSmoothingEnabled = true;
       bCtx.imageSmoothingQuality = 'high';
       
-      const scale = Math.max(slot.b.w / slot.img.width, slot.b.h / slot.img.height);
-      const w = slot.img.width * scale;
-      const h = slot.img.height * scale;
-      const dx = slot.b.x + (slot.b.w - w) / 2;
-      const dy = slot.b.y + (slot.b.h - h) / 2;
+      // Calculate Zoom and Pan (X/Y adjustments)
+      const baseScale = Math.max(slot.b.w / slot.img.width, slot.b.h / slot.img.height);
+      const scale = baseScale * (slot.s.zoom / 100);
+      const scaledW = slot.img.width * scale;
+      const scaledH = slot.img.height * scale;
       
-      bCtx.drawImage(slot.img, dx, dy, w, h);
+      const extraW = scaledW - slot.b.w;
+      const extraH = scaledH - slot.b.h;
+      
+      const panX = slot.s.x / 100;
+      const panY = slot.s.y / 100;
+      
+      const dx = slot.b.x - (extraW * panX);
+      const dy = slot.b.y - (extraH * panY);
+      
+      bCtx.drawImage(slot.img, dx, dy, scaledW, scaledH);
       bCtx.restore();
 
-      // Cyber-Red Stroke over the frame
       bCtx.lineWidth = 4;
       bCtx.strokeStyle = 'rgba(255, 18, 63, 0.4)';
       bCtx.stroke();
@@ -562,23 +547,19 @@ function drawCardBackground() {
       bCtx.strokeStyle = 'rgba(255, 18, 63, 0.2)';
       bCtx.stroke();
 
-      // Red crosshair lines inside empty frame
       bCtx.strokeStyle = 'rgba(255, 18, 63, 0.08)';
       bCtx.beginPath();
       bCtx.moveTo(slot.b.x, slot.b.y); bCtx.lineTo(slot.b.x + slot.b.w, slot.b.y + slot.b.h);
       bCtx.moveTo(slot.b.x + slot.b.w, slot.b.y); bCtx.lineTo(slot.b.x, slot.b.y + slot.b.h);
       bCtx.stroke();
 
-      // UI Text Info
       bCtx.fillStyle = 'rgba(255, 18, 63, 0.35)';
       bCtx.font = "bold 15px 'Share Tech Mono', monospace";
       bCtx.textAlign = 'center';
-      bCtx.fillText(`[ CAPTURED_SOURCE_0${idx+1} ]`, slot.b.x + slot.b.w/2, slot.b.y + slot.b.h/2);
+      bCtx.fillText(`[ NO_DATA_STREAM_0${idx+1} ]`, slot.b.x + slot.b.w/2, slot.b.y + slot.b.h/2);
     }
     
-    // Neon Red corner brackets
     drawTechBrackets(bCtx, slot.b.x, slot.b.y, slot.b.w, slot.b.h, 25);
-    
     bCtx.restore();
   });
 }
@@ -590,7 +571,6 @@ function renderFull() {
   ctx.drawImage(baseCanvas, 0, 0);
   ctx.drawImage(paintCanvas, 0, 0); 
 
-  // Draw Header text inside the badge (Futuristic font)
   const headerRaw = document.getElementById('headerText').value.trim();
   if(headerRaw) {
     ctx.save();
@@ -603,10 +583,8 @@ function renderFull() {
     ctx.restore();
   }
 
-  // Draw paragraph beautifully fitted in the box
   drawFixedParagraph();
   
-  // Draw tech emblem crest in the photo background space
   if(showLogo && logoImg) {
     ctx.save();
     ctx.globalAlpha = 0.08;
@@ -617,7 +595,6 @@ function renderFull() {
   }
 }
 
-//  Red Tactical Paragraph Auto-fitting Mechanics 
 function drawFixedParagraph() {
   const textRaw = document.getElementById('mainText').value.trim();
   if(!textRaw) return;
@@ -651,9 +628,7 @@ function drawFixedParagraph() {
     let regex = /(\s+|\S+)/g;
     let match;
     while ((match = regex.exec(seg.text)) !== null) {
-      if(match[0].length > 0) {
-        tokens.push({ text: match[0], style: seg.style, isSpace: /^\s+$/.test(match[0]) });
-      }
+      if(match[0].length > 0) tokens.push({ text: match[0], style: seg.style, isSpace: /^\s+$/.test(match[0]) });
     }
   });
 
@@ -662,7 +637,7 @@ function drawFixedParagraph() {
   let fontSize = 34;
   let lineHeight = 44;
   let lines = [];
-  const maxAllowW = CARD_LAYOUT.boxW - 70; // Inner safety padding
+  const maxAllowW = CARD_LAYOUT.boxW - 70; 
   const maxAllowH = CARD_LAYOUT.boxH - 60; 
 
   while (fontSize > 16) {
@@ -696,11 +671,7 @@ function drawFixedParagraph() {
       lines.push({ words: currentLine, w: currentW });
     }
 
-    let totalH = lines.length * lineHeight;
-    if (totalH <= maxAllowH) {
-      break; 
-    }
-
+    if (lines.length * lineHeight <= maxAllowH) break; 
     fontSize -= 2;
     lineHeight -= 2.5;
   }
@@ -715,11 +686,8 @@ function drawFixedParagraph() {
 
     line.words.forEach(item => {
       ctx.fillStyle = '#ffffff';
-      if(item.style === 'highlight') {
-        ctx.fillStyle = '#ffea00'; // Neon Gold/Yellow
-      } else if (item.style === 'redtext') {
-        ctx.fillStyle = '#ff123f'; // Glowing Neon Red status
-      }
+      if(item.style === 'highlight') ctx.fillStyle = '#ffea00'; 
+      else if (item.style === 'redtext') ctx.fillStyle = '#ff123f'; 
       ctx.fillText(item.text, x, y);
       x += item.w;
     });
@@ -728,7 +696,7 @@ function drawFixedParagraph() {
   ctx.restore();
 }
 
-//  UI Control Systems 
+// ── UI Control Systems ──
 function toggleLogo() {
   showLogo = !showLogo;
   document.getElementById('logoBtn').classList.toggle('active-gold', showLogo);
@@ -738,10 +706,13 @@ function toggleLogo() {
 function setTool(tool) {
   activeTool = tool;
   document.getElementById('btnText').classList.toggle('active', tool==='text');
+  document.getElementById('btnImage').classList.toggle('active', tool==='image');
   document.getElementById('btnPaint').classList.toggle('active', tool==='paint');
+  
   canvas.className = tool === 'paint' ? 'tool-paint' : '';
   
   document.getElementById('textSettings').classList.toggle('open', tool==='text');
+  document.getElementById('imageSettings').classList.toggle('open', tool==='image');
   document.getElementById('paintSettings').classList.toggle('open', tool==='paint');
 }
 
@@ -751,7 +722,7 @@ function setPaintMode(m) {
   document.getElementById('modeMosaic').classList.toggle('sel', m==='mosaic');
 }
 
-//  Red Sensor Tech Brush Paint Engine 
+// ── Red Sensor Tech Brush ──
 function getPos(e) {
   const rect = canvas.getBoundingClientRect();
   const scaleX = W / rect.width;
@@ -761,38 +732,29 @@ function getPos(e) {
 }
 
 let painting = false;
-
-canvas.addEventListener('mousedown', handleStart);
-canvas.addEventListener('touchstart', handleStart, {passive:false});
-canvas.addEventListener('mousemove', handleMove);
-canvas.addEventListener('touchmove', handleMove, {passive:false});
-canvas.addEventListener('mouseup', handleEnd);
-canvas.addEventListener('touchend', handleEnd);
+canvas.addEventListener('mousedown', handleStart); canvas.addEventListener('touchstart', handleStart, {passive:false});
+canvas.addEventListener('mousemove', handleMove); canvas.addEventListener('touchmove', handleMove, {passive:false});
+canvas.addEventListener('mouseup', handleEnd); canvas.addEventListener('touchend', handleEnd);
 
 function handleStart(e) {
   if(activeTool !== 'paint') return;
   if(e.cancelable) e.preventDefault();
-  painting = true;
-  savePaintHistory();
-  const {x, y} = getPos(e);
-  doPaint(x, y);
+  painting = true; savePaintHistory();
+  const {x, y} = getPos(e); doPaint(x, y);
 }
 function handleMove(e) {
   if(!painting || activeTool !== 'paint') return;
   if(e.cancelable) e.preventDefault();
-  const {x, y} = getPos(e);
-  doPaint(x, y);
+  const {x, y} = getPos(e); doPaint(x, y);
 }
 function handleEnd() { painting = false; }
 
 function doPaint(cx, cy) {
   const r = parseInt(document.getElementById('brushSize').value);
-  
   const sampleCanvas = document.createElement('canvas');
   sampleCanvas.width = W; sampleCanvas.height = H;
   const sCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
-  sCtx.drawImage(baseCanvas, 0, 0);
-  sCtx.drawImage(paintCanvas, 0, 0);
+  sCtx.drawImage(baseCanvas, 0, 0); sCtx.drawImage(paintCanvas, 0, 0);
 
   const x1 = Math.max(0, cx-r|0), y1 = Math.max(0, cy-r|0);
   const x2 = Math.min(W, cx+r|0), y2 = Math.min(H, cy+r|0);
@@ -804,26 +766,18 @@ function doPaint(cx, cy) {
     const ptCtx = patch.getContext('2d');
     ptCtx.filter = `blur(${Math.round(r*0.25)}px)`;
     ptCtx.drawImage(sampleCanvas, x1, y1, w, h, 0, 0, w, h);
-
-    pCtx.save();
-    pCtx.beginPath(); pCtx.arc(cx, cy, r, 0, Math.PI*2); pCtx.clip();
-    pCtx.drawImage(patch, x1, y1);
-    pCtx.restore();
+    pCtx.save(); pCtx.beginPath(); pCtx.arc(cx, cy, r, 0, Math.PI*2); pCtx.clip();
+    pCtx.drawImage(patch, x1, y1); pCtx.restore();
   } else {
     const block = Math.max(8, Math.round(r*0.35));
-    pCtx.save();
-    pCtx.beginPath(); pCtx.arc(cx, cy, r, 0, Math.PI*2); pCtx.clip();
-    
+    pCtx.save(); pCtx.beginPath(); pCtx.arc(cx, cy, r, 0, Math.PI*2); pCtx.clip();
     for(let bx=x1; bx<x2; bx+=block) {
       for(let by=y1; by<y2; by+=block) {
         const bw = Math.min(block, x2-bx), bh = Math.min(block, y2-by);
         const imgData = sCtx.getImageData(bx, by, bw, bh).data;
         let rr=0, gg=0, bb=0, count=0;
         for(let i=0; i<imgData.length; i+=4) { rr+=imgData[i]; gg+=imgData[i+1]; bb+=imgData[i+2]; count++; }
-        if(count>0) {
-          pCtx.fillStyle = `rgb(${rr/count},${gg/count},${bb/count})`;
-          pCtx.fillRect(bx, by, bw+1, bh+1);
-        }
+        if(count>0) { pCtx.fillStyle = `rgb(${rr/count},${gg/count},${bb/count})`; pCtx.fillRect(bx, by, bw+1, bh+1); }
       }
     }
     pCtx.restore();
@@ -837,14 +791,9 @@ function savePaintHistory() {
 }
 function undoPaint() {
   if(!paintHistory.length) return;
-  pCtx.putImageData(paintHistory.pop(), 0, 0);
-  renderFull();
+  pCtx.putImageData(paintHistory.pop(), 0, 0); renderFull();
 }
-function clearPaint() {
-  pCtx.clearRect(0,0,W,H);
-  paintHistory = [];
-  renderFull();
-}
+function clearPaint() { pCtx.clearRect(0,0,W,H); paintHistory = []; renderFull(); }
 
 function downloadCard() {
   if(!p1Img && !p2Img) { msg('Please upload at least one system image.', 'err'); return; }
