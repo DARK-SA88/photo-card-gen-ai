@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>BCT Card Generator - V4 Perfect Edition</title>
+<title>BCT Card Generator - Red Cyber Tech Edition</title>
 
 <!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700;800&family=Bebas+Neue&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
 <style>
 :root {
+  --neon-red: #ff123f;
+  --neon-red-bright: #ff3b5f;
   --crimson: #c8001a;
-  --crimson-light: #ff1a35;
-  --gold: #e8a000;
-  --gold-bright: #ffbe2e;
-  --bg-void: #050005;
-  --bg-panel: #110010;
-  --bg-surface: #180015;
-  --border-dim: rgba(200,0,26,0.18);
-  --border-mid: rgba(200,0,26,0.35);
+  --gold: #ffea00;
+  --bg-void: #080103;
+  --bg-panel: #140205;
+  --bg-surface: #1d0308;
+  --border-dim: rgba(255, 18, 63, 0.15);
+  --border-mid: rgba(255, 18, 63, 0.35);
   --text-primary: #ffffff;
-  --text-secondary: rgba(255,255,255,0.65);
-  --text-dim: rgba(255,255,255,0.35);
+  --text-secondary: rgba(255,255,255,0.7);
+  --text-dim: rgba(255,255,255,0.4);
   --radius: 12px;
 }
 
@@ -30,8 +30,8 @@
 body {
   background: var(--bg-void);
   background-image:
-    radial-gradient(ellipse 100% 40% at 50% 0%, rgba(180,0,20,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 30% at 80% 30%, rgba(100,0,80,0.08) 0%, transparent 60%);
+    radial-gradient(ellipse 100% 40% at 50% 0%, rgba(255, 18, 63, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 30% at 80% 30%, rgba(255, 18, 63, 0.06) 0%, transparent 60%);
   color: var(--text-primary);
   font-family: 'Exo 2', sans-serif;
   min-height: 100vh;
@@ -44,30 +44,30 @@ body {
 /* ── HEADER ── */
 .header {
   padding: 16px 16px 14px;
-  background: linear-gradient(180deg, rgba(30,0,20,0.95) 0%, rgba(15,0,10,0.9) 100%);
+  background: linear-gradient(180deg, rgba(20, 2, 5, 0.95) 0%, rgba(8, 1, 2, 0.9) 100%);
   border-bottom: 1px solid var(--border-mid);
   position: relative;
 }
 .header::before {
   content:''; position:absolute; top:0; left:0; right:0; height:1px;
-  background: linear-gradient(90deg, transparent, var(--crimson), var(--gold), var(--crimson), transparent);
+  background: linear-gradient(90deg, transparent, var(--neon-red), var(--gold), var(--neon-red), transparent);
 }
 .header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom: 8px; }
 .header-badge {
-  font-family: 'Rajdhani', sans-serif; font-size: 9px; font-weight: 700;
-  letter-spacing: 3px; color: var(--gold); background: rgba(232,160,0,0.08);
-  border: 1px solid rgba(232,160,0,0.25); padding: 3px 10px; border-radius: 3px;
+  font-family: 'Share Tech Mono', monospace; font-size: 10px;
+  letter-spacing: 2px; color: var(--neon-red); background: rgba(255, 18, 63, 0.08);
+  border: 1px solid rgba(255, 18, 63, 0.25); padding: 3px 10px; border-radius: 3px;
 }
 .header-version { font-family: 'Rajdhani', sans-serif; font-size: 10px; font-weight: 600; color: var(--text-dim); }
-.header-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 3px; line-height: 1; text-shadow: 0 0 30px rgba(200,0,26,0.5); }
-.header-title em { font-style:normal; color: var(--gold-bright); }
+.header-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 3px; line-height: 1; text-shadow: 0 0 20px rgba(255, 18, 63, 0.3); }
+.header-title em { font-style:normal; color: var(--gold); }
 .header-sub { font-family: 'Rajdhani', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 4px; color: var(--text-secondary); margin-top: 2px; }
 
 /* ── CANVAS AREA ── */
 .canvas-wrap { padding: 14px 14px 0; }
 .canvas-outer {
   position: relative; border-radius: var(--radius); overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(200,0,26,0.5), 0 8px 40px rgba(0,0,0,0.9);
+  box-shadow: 0 0 0 1px rgba(255, 18, 63, 0.3), 0 8px 40px rgba(0,0,0,0.9);
 }
 #mainCanvas {
   display:block; width:100%; height:auto; user-select:none; border-radius: var(--radius);
@@ -86,11 +86,11 @@ body {
 /* Photos */
 .upload-row { display:grid; grid-template-columns:1fr 1fr; gap: 10px; }
 .upload-slot {
-  background: var(--bg-surface); border: 1.5px dashed rgba(200,0,26,0.35);
+  background: var(--bg-surface); border: 1.5px dashed var(--border-mid);
   border-radius: var(--radius); cursor: pointer; position:relative; overflow:hidden;
   height: 90px; display:flex; flex-direction:column; align-items:center; justify-content:center;
 }
-.upload-slot.loaded { border-style:solid; border-color: rgba(200,0,26,0.55); }
+.upload-slot.loaded { border-style:solid; border-color: var(--neon-red); }
 .slot-thumb { width:100%; height:100%; object-fit:cover; display:none; opacity:0.5; }
 .upload-slot.loaded .slot-thumb { display:block; }
 .slot-body { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
@@ -102,14 +102,15 @@ body {
 .tool-row { display:flex; border-bottom: 1px solid var(--border-dim); }
 .tool-row:last-child { border-bottom:none; }
 
+/* EQUAL TOOL BUTTONS */
 .tool-btn {
   flex:1; padding: 12px 6px; background:transparent; border:none; border-right: 1px solid var(--border-dim);
   color: var(--text-secondary); font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700;
   letter-spacing: 1px; text-transform: uppercase; cursor:pointer; display:flex; align-items:center; justify-content:center; gap: 4px;
 }
 .tool-btn:last-child { border-right:none; }
-.tool-btn.active { color: var(--text-primary); background: rgba(200,0,26,0.15); }
-.tool-btn.active-gold { color: var(--gold-bright); background: rgba(232,160,0,0.1); }
+.tool-btn.active { color: var(--text-primary); background: rgba(255, 18, 63, 0.12); }
+.tool-btn.active-gold { color: var(--neon-red); background: rgba(255, 18, 63, 0.05); }
 
 /* Settings Block */
 .settings-block { display:none; padding:12px; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border-dim); flex-direction:column; gap:10px; }
@@ -119,34 +120,43 @@ body {
 .input-group { display:flex; flex-direction:column; gap:4px; margin-bottom: 5px; }
 .input-group label { font-family: 'Rajdhani', sans-serif; font-size: 10px; color: var(--text-dim); text-transform:uppercase; letter-spacing:1px; display:flex; justify-content:space-between;}
 .input-box {
-  width:100%; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1);
+  width:100%; background:rgba(255,255,255,0.02); border:1px solid rgba(255, 18, 63, 0.2);
   border-radius:6px; color:#fff; font-family:'Exo 2', sans-serif; font-size:14px; font-weight:500; padding:10px;
   outline:none; transition:border 0.2s;
 }
-.input-box:focus { border-color:var(--crimson); background:rgba(200,0,26,0.05); }
-select.input-box { cursor: pointer; color: var(--gold-bright); font-weight: 600; }
-select.input-box option { background: #1a0015; color: #fff; }
+.input-box:focus { border-color:var(--neon-red); background:rgba(255, 18, 63, 0.04); }
+select.input-box { cursor: pointer; color: var(--neon-red); font-weight: 600; font-family: 'Share Tech Mono', monospace; }
+select.input-box option { background: #140205; color: #fff; }
 textarea.input-box { resize:vertical; min-height:75px; }
 .hl-yellow:focus { border-color:var(--gold); }
-.hl-red:focus { border-color:var(--crimson-light); }
+.hl-red:focus { border-color:var(--neon-red-bright); }
 
 /* Buttons & Sliders */
 .btn-download {
-  width:100%; padding: 15px; background: linear-gradient(135deg, #a00015 0%, #cc001f 50%, #e0002a 100%);
-  border:none; border-radius: var(--radius); color:#fff; font-family: 'Bebas Neue', sans-serif; font-size: 20px;
-  letter-spacing: 3px; cursor:pointer; box-shadow: 0 4px 20px rgba(200,0,26,0.4); margin-top:10px;
+  width:100%; padding: 15px; background: linear-gradient(135deg, #800010 0%, #ff123f 50%, #ff5274 100%);
+  border:none; border-radius: var(--radius); color:#ffffff; font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+  letter-spacing: 3px; cursor:pointer; box-shadow: 0 4px 20px rgba(255, 18, 63, 0.3); margin-top:10px; font-weight: bold;
 }
 .btn-download:active { transform:scale(0.98); }
 .status { text-align:center; font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 600; color: var(--text-dim); padding: 5px; }
 
 .mode-tabs { display:flex; gap:4px; margin-bottom:8px;}
 .mode-tab { flex:1; padding:8px; background:rgba(255,255,255,0.05); border:none; border-radius:4px; color:var(--text-secondary); font-size:11px; font-weight:700; cursor:pointer;}
-.mode-tab.sel { background:var(--crimson); color:#fff; }
+.mode-tab.sel { background:var(--neon-red); color:#ffffff; }
 input[type="file"] { display:none; }
+input[type=range].mini-range { flex:1; height:4px; -webkit-appearance:none; background:rgba(255, 18, 63, 0.2); border-radius:2px; margin: 8px 0;}
+input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--neon-red); cursor:pointer; box-shadow: 0 0 5px rgba(255,18,63,0.5);}
 
-/* Custom Sliders for Adjustments */
-input[type=range].mini-range { flex:1; height:4px; -webkit-appearance:none; background:rgba(255,255,255,0.1); border-radius:2px; margin: 10px 0; }
-input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--crimson-light); cursor:pointer; box-shadow: 0 0 5px rgba(255,0,0,0.5);}
+/* NEW: LOCK SYSTEM UI (RED THEME) */
+.lock-wrap { display: flex; align-items: center; justify-content: center; background: rgba(255, 18, 63, 0.05); padding: 10px; border-radius: 6px; cursor: pointer; border: 1px solid rgba(255, 18, 63, 0.2); transition: all 0.2s; margin-bottom: 5px;}
+.lock-wrap:hover { background: rgba(255, 18, 63, 0.1); border-color: rgba(255, 18, 63, 0.4); }
+.lock-wrap.is-unlocked { background: rgba(100, 220, 120, 0.1); border-color: rgba(100, 220, 120, 0.3); }
+.lock-wrap input { margin-right: 8px; cursor: pointer; width: 16px; height: 16px; accent-color: var(--neon-red); }
+.lock-text { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; color: var(--text-secondary); text-transform: uppercase; }
+.lock-wrap.is-unlocked .lock-text { color: #5dba6e; }
+
+.slider-group { transition: opacity 0.3s, filter 0.3s; }
+.slider-group.locked { opacity: 0.35; filter: grayscale(100%); pointer-events: none; }
 </style>
 </head>
 <body>
@@ -154,10 +164,10 @@ input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; wi
 <!-- HEADER -->
 <div class="header">
   <div class="header-top">
-    <div class="header-badge">BCT TOOLS</div>
-    <div class="header-version">v4.0 PERFECT EDITION</div>
+    <div class="header-badge">RED INTEL</div>
+    <div class="header-version">v4.5 TECH RED (LOCKED)</div>
   </div>
-  <div class="header-title">POST CARD <em>GENERATOR</em></div>
+  <div class="header-title">TACTICAL <em>GENERATOR</em></div>
   <div class="header-sub">AL HARAS UNIT · BANGLADESH CYBER TROOPS</div>
 </div>
 
@@ -173,35 +183,35 @@ input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; wi
 
   <!-- Upload -->
   <div>
-    <div class="sec-label">Upload Photos</div>
+    <div class="sec-label">Upload Evidence Photos</div>
     <div class="upload-row">
       <div class="upload-slot" id="slot1" onclick="document.getElementById('photo1In').click()">
         <img class="slot-thumb" id="prev1" alt="">
-        <div class="slot-body"><div class="slot-name">PHOTO 1 (LEFT)</div></div>
+        <div class="slot-body"><div class="slot-name">EVIDENCE 1 (LEFT)</div></div>
       </div>
       <div class="upload-slot" id="slot2" onclick="document.getElementById('photo2In').click()">
         <img class="slot-thumb" id="prev2" alt="">
-        <div class="slot-body"><div class="slot-name">PHOTO 2 (RIGHT)</div></div>
+        <div class="slot-body"><div class="slot-name">EVIDENCE 2 (RIGHT)</div></div>
       </div>
     </div>
   </div>
 
   <!-- Tools Panel -->
   <div>
-    <div class="sec-label">Card Settings</div>
+    <div class="sec-label">Operations Settings</div>
     <div class="tool-panel">
 
+      <!-- EQUAL SIZE MENU BUTTONS -->
       <div class="tool-row">
-        <button class="tool-btn active" id="btnText" onclick="setTool('text')">📝 Text</button>
-        <!-- NEW BUTTON FOR IMAGE ADJUSTMENT -->
-        <button class="tool-btn" id="btnImage" onclick="setTool('image')">🖼 Adjust Image</button>
-        <button class="tool-btn" id="btnPaint" onclick="setTool('paint')">🖌 Paint</button>
+        <button class="tool-btn active" id="btnText" onclick="setTool('text')">⚡ Text</button>
+        <button class="tool-btn" id="btnImage" onclick="setTool('image')">🖼 Adjust</button>
+        <button class="tool-btn" id="btnPaint" onclick="setTool('paint')">🖌 Brush</button>
       </div>
       
       <!-- Text Panel -->
       <div class="settings-block open" id="textSettings">
         <div class="input-group">
-          <label style="color:var(--gold-bright)">Select Violation Category</label>
+          <label style="color:var(--neon-red)">Incident Category</label>
           <select id="categorySelect" class="input-box" onchange="onCategoryChange()">
             <option value="obscene_account">Obscene Account</option>
             <option value="obscene_page">Obscene Page</option>
@@ -217,73 +227,80 @@ input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; wi
         </div>
         
         <div class="input-group">
-          <label>Header Line (Top Badge)</label>
+          <label>Tech Header Label</label>
           <input type="text" id="headerText" class="input-box" placeholder="Header text..." oninput="renderFull()">
         </div>
 
         <div class="input-group">
-          <label>Detailed Sub-Text (English Description)</label>
+          <label>Target Details & Report Statement</label>
           <textarea id="mainText" class="input-box" placeholder="Description here..." oninput="renderFull()"></textarea>
         </div>
         
         <div class="input-group">
-          <label style="color:var(--gold-bright)">Highlight Text (Yellow) - Comma separated</label>
+          <label style="color:var(--gold)">Target Metrics Highlight (Yellow)</label>
           <input type="text" id="hlText" class="input-box hl-yellow" placeholder="e.g. 136K followers" oninput="renderFull()">
         </div>
         <div class="input-group">
-          <label style="color:var(--crimson-light)">Highlight Text (Red) - Comma separated</label>
+          <label style="color:var(--neon-red-bright)">Status Highlight (Neon Red)</label>
           <input type="text" id="stText" class="input-box hl-red" placeholder="e.g. terminated" oninput="renderFull()">
         </div>
       </div>
 
-      <!-- NEW: Image Adjustment Panel -->
+      <!-- Image Adjust Panel (LOCKED BY DEFAULT) -->
       <div class="settings-block" id="imageSettings">
         <div class="mode-tabs">
-          <button class="mode-tab sel" id="tabEv1" onclick="selectEv(1)">PHOTO 1</button>
-          <button class="mode-tab" id="tabEv2" onclick="selectEv(2)">PHOTO 2</button>
+          <button class="mode-tab sel" id="tabEv1" onclick="selectEv(1)">EVIDENCE 1</button>
+          <button class="mode-tab" id="tabEv2" onclick="selectEv(2)">EVIDENCE 2</button>
         </div>
-        <div style="font-size: 11px; color:var(--text-dim); text-align:center; margin-bottom: 5px;">
-          Adjust zoom and move the picture to fit perfectly.
-        </div>
-        <div class="input-group">
-          <label>Zoom In/Out <span id="valZoom">100%</span></label>
-          <input type="range" class="mini-range" id="adjZoom" min="100" max="300" value="100" oninput="updateImageState()">
-        </div>
-        <div class="input-group">
-          <label>Move Left ↔ Right (X-Axis)</label>
-          <input type="range" class="mini-range" id="adjX" min="0" max="100" value="50" oninput="updateImageState()">
-        </div>
-        <div class="input-group">
-          <label>Move Up ↕ Down (Y-Axis)</label>
-          <input type="range" class="mini-range" id="adjY" min="0" max="100" value="50" oninput="updateImageState()">
+        
+        <!-- Lock Checkbox Toggle -->
+        <label class="lock-wrap" id="lockWrap">
+          <input type="checkbox" id="lockCheck" onchange="toggleLock()">
+          <span class="lock-text" id="lockText">🔒 Locked (Click to Edit)</span>
+        </label>
+
+        <!-- Image Controls (Disabled when locked) -->
+        <div class="slider-group locked" id="adjustControls">
+          <div class="input-group">
+            <label>Zoom Level <span id="valZoom">100%</span></label>
+            <input type="range" class="mini-range" id="adjZoom" min="100" max="300" value="100" oninput="updateImageState()">
+          </div>
+          <div class="input-group">
+            <label>Pan X (Left ↔ Right)</label>
+            <input type="range" class="mini-range" id="adjX" min="0" max="100" value="50" oninput="updateImageState()">
+          </div>
+          <div class="input-group">
+            <label>Pan Y (Up ↕ Down)</label>
+            <input type="range" class="mini-range" id="adjY" min="0" max="100" value="50" oninput="updateImageState()">
+          </div>
         </div>
       </div>
 
       <!-- Paint Panel -->
       <div class="settings-block" id="paintSettings">
         <div class="mode-tabs">
-          <button class="mode-tab sel" id="modeBlur" onclick="setPaintMode('blur')">BLUR</button>
-          <button class="mode-tab" id="modeMosaic" onclick="setPaintMode('mosaic')">MOSAIC</button>
+          <button class="mode-tab sel" id="modeBlur" onclick="setPaintMode('blur')">BLUR SENSOR</button>
+          <button class="mode-tab" id="modeMosaic" onclick="setPaintMode('mosaic')">MOSAIC SENSOR</button>
         </div>
         <div class="input-group" style="margin-bottom:10px;">
-          <label>Brush Size</label>
+          <label>Sensor Radius</label>
           <input type="range" class="mini-range" id="brushSize" min="10" max="80" value="40">
         </div>
         <div style="display:flex; gap:10px;">
-          <button class="mode-tab" onclick="undoPaint()" style="background:rgba(255,255,255,0.1)">↺ UNDO</button>
-          <button class="mode-tab" onclick="clearPaint()" style="background:rgba(200,0,26,0.2); color:var(--crimson-light)">✖ CLEAR ALL</button>
+          <button class="mode-tab" onclick="undoPaint()" style="background:rgba(255,255,255,0.05); color:#fff;">↺ UNDO</button>
+          <button class="mode-tab" onclick="clearPaint()" style="background:rgba(255, 18, 63, 0.15); color:var(--neon-red-bright)">✖ PURGE SENSORS</button>
         </div>
       </div>
 
       <div class="tool-row">
-        <button class="tool-btn active-gold" id="logoBtn" onclick="toggleLogo()">🛡 Toggle Watermark</button>
+        <button class="tool-btn active-gold" id="logoBtn" onclick="toggleLogo()">🛡 Toggle Tactical Crest</button>
       </div>
 
     </div>
   </div>
 
-  <button class="btn-download" onclick="downloadCard()">DOWNLOAD CARD</button>
-  <div class="status" id="status">Upload photos and select a category to start.</div>
+  <button class="btn-download" onclick="downloadCard()">EXTRACT TECHNICAL POSTCARD</button>
+  <div class="status" id="status">Upload system images and assign a protocol to extract.</div>
 
 </div>
 
@@ -292,68 +309,18 @@ input[type=range].mini-range::-webkit-slider-thumb { -webkit-appearance:none; wi
 <input type="file" id="photo2In" accept="image/*" onchange="loadPhoto(this,2)">
 
 <script>
-// ── Presets Database (Exact Matching English Format) ──
+// ── Presets Database ──
 const textPresets = {
-  obscene_account: {
-    header: "OBSCENE ACCOUNT REMOVED",
-    desc: "An Facebook account/page amassing 136K followers has been terminated for disseminating obscene and indecent content by Team BCT",
-    yellow: "136K followers",
-    red: "terminated"
-  },
-  obscene_page: {
-    header: "OBSCENE PAGE REMOVED",
-    desc: "An Facebook page amassing 250K followers has been terminated for disseminating obscene and indecent content by Team BCT",
-    yellow: "250K followers",
-    red: "terminated"
-  },
-  atheist_account: {
-    header: "ATHEIST ACCOUNT REMOVED",
-    desc: "A Facebook account amassing 50K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT",
-    yellow: "50K followers",
-    red: "terminated"
-  },
-  atheist_page: {
-    header: "ATHEIST PAGE REMOVED",
-    desc: "A Facebook page amassing 100K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT",
-    yellow: "100K followers",
-    red: "terminated"
-  },
-  anti_islam_account: {
-    header: "ANTI-ISLAMIC ACCOUNT REMOVED",
-    desc: "A Facebook account amassing 80K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT",
-    yellow: "80K followers",
-    red: "terminated"
-  },
-  anti_islam_page: {
-    header: "ANTI-ISLAMIC PAGE REMOVED",
-    desc: "A Facebook page amassing 300K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT",
-    yellow: "300K followers",
-    red: "terminated"
-  },
-  gambling_page: {
-    header: "GAMBLING PAGE REMOVED",
-    desc: "A Facebook page amassing 400K followers has been terminated for promoting illegal online gambling and betting by Team BCT",
-    yellow: "400K followers",
-    red: "terminated"
-  },
-  gambling_account: {
-    header: "GAMBLING ACCOUNT REMOVED",
-    desc: "A Facebook account amassing 60K followers has been terminated for promoting illegal online gambling and betting by Team BCT",
-    yellow: "60K followers",
-    red: "terminated"
-  },
-  scammer_page: {
-    header: "SCAMMER PAGE REMOVED",
-    desc: "A Facebook page amassing 150K followers has been terminated for scamming and fraudulent financial activities by Team BCT",
-    yellow: "150K followers",
-    red: "terminated"
-  },
-  scammer_account: {
-    header: "SCAMMER ACCOUNT REMOVED",
-    desc: "A Facebook account amassing 45K followers has been terminated for scamming and fraudulent financial activities by Team BCT",
-    yellow: "45K followers",
-    red: "terminated"
-  }
+  obscene_account: { header: "OBSCENE ACCOUNT REMOVED", desc: "An Facebook account/page amassing 136K followers has been terminated for disseminating obscene and indecent content by Team BCT", yellow: "136K followers", red: "terminated" },
+  obscene_page: { header: "OBSCENE PAGE REMOVED", desc: "An Facebook page amassing 250K followers has been terminated for disseminating obscene and indecent content by Team BCT", yellow: "250K followers", red: "terminated" },
+  atheist_account: { header: "ATHEIST ACCOUNT REMOVED", desc: "A Facebook account amassing 50K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT", yellow: "50K followers", red: "terminated" },
+  atheist_page: { header: "ATHEIST PAGE REMOVED", desc: "A Facebook page amassing 100K followers has been terminated for spreading atheism and hurting religious sentiments by Team BCT", yellow: "100K followers", red: "terminated" },
+  anti_islam_account: { header: "ANTI-ISLAMIC ACCOUNT REMOVED", desc: "A Facebook account amassing 80K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT", yellow: "80K followers", red: "terminated" },
+  anti_islam_page: { header: "ANTI-ISLAMIC PAGE REMOVED", desc: "A Facebook page amassing 300K followers has been terminated for spreading hate speech and anti-Islamic propaganda by Team BCT", yellow: "300K followers", red: "terminated" },
+  gambling_page: { header: "GAMBLING PAGE REMOVED", desc: "A Facebook page amassing 400K followers has been terminated for promoting illegal online gambling and betting by Team BCT", yellow: "400K followers", red: "terminated" },
+  gambling_account: { header: "GAMBLING ACCOUNT REMOVED", desc: "A Facebook account amassing 60K followers has been terminated for promoting illegal online gambling and betting by Team BCT", yellow: "60K followers", red: "terminated" },
+  scammer_page: { header: "SCAMMER PAGE REMOVED", desc: "A Facebook page amassing 150K followers has been terminated for scamming and fraudulent financial activities by Team BCT", yellow: "150K followers", red: "terminated" },
+  scammer_account: { header: "SCAMMER ACCOUNT REMOVED", desc: "A Facebook account amassing 45K followers has been terminated for scamming and fraudulent financial activities by Team BCT", yellow: "45K followers", red: "terminated" }
 };
 
 // ── Core Setup ──
@@ -362,10 +329,8 @@ const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const W = 1080, H = 1080;
 canvas.width = W; canvas.height = H;
 
-// Offscreen canvases
 const baseCanvas = document.createElement('canvas'); baseCanvas.width = W; baseCanvas.height = H;
 const bCtx = baseCanvas.getContext('2d', { willReadFrequently: true });
-
 const paintCanvas = document.createElement('canvas'); paintCanvas.width = W; paintCanvas.height = H;
 const pCtx = paintCanvas.getContext('2d');
 
@@ -378,15 +343,15 @@ let paintHistory = [];
 
 let p1Img = null, p2Img = null;
 
-// New: Image Adjustment States
+// New: Image Adjustments & Lock Status
 let activeEv = 1;
-// ox: 50 means centered (0 to 100 percentage of the extra overflowing area)
-let pStates = [ { zoom: 100, ox: 50, oy: 50 }, { zoom: 100, ox: 50, oy: 50 } ];
+let isLocked = true; // Disabled by default
+let pStates = [ { zoom: 100, x: 50, y: 50 }, { zoom: 100, x: 50, y: 50 } ];
 
 const CARD_LAYOUT = {
-  boxX: 160, boxY: 76, boxW: 760, boxH: 172, boxR: 30,
-  badgeW: 500, badgeH: 60, badgeR: 16,
-  photosY: 285, photosH: 745, photosW: 460, photosGap: 50       
+  boxX: 120, boxY: 80, boxW: 840, boxH: 190,
+  badgeW: 560, badgeH: 56,
+  photosY: 310, photosH: 720, photosW: 460, photosGap: 40       
 };
 
 document.fonts.ready.then(() => { onCategoryChange(); });
@@ -407,7 +372,7 @@ logoTry.crossOrigin = 'anonymous';
 logoTry.onload = () => { logoImg = logoTry; renderFull(); };
 logoTry.src = 'https://i.ibb.co/Y72LMbdQ/20260502-163657.png';
 
-// ── Photo Loading & Adjustment logic ──
+// ── Photo Loading ──
 function loadPhoto(input, n) {
   const file = input.files[0];
   if (!file) return;
@@ -415,19 +380,17 @@ function loadPhoto(input, n) {
   reader.onload = e => {
     const img = new Image();
     img.onload = () => {
-      if(n === 1) p1Img = img; else p2Img = img;
-      
-      // Reset position/zoom when new photo is uploaded
-      pStates[n-1] = { zoom: 100, ox: 50, oy: 50 }; 
+      if(n === 1) { p1Img = img; pStates[0] = {zoom:100, x:50, y:50}; }
+      else { p2Img = img; pStates[1] = {zoom:100, x:50, y:50}; }
       
       document.getElementById('prev'+n).src = e.target.result;
       document.getElementById('slot'+n).classList.add('loaded');
       
-      // Auto-switch to the adjustment tab
+      // Select the correct tab and switch to adjust tool automatically
       selectEv(n);
-      setTool('image'); 
+      setTool('image');
       renderFull();
-      msg('Photo ' + n + ' uploaded. Adjust Position and Zoom now.', 'ok');
+      msg(`Evidence ${n} loaded. Click Unlock to adjust Zoom/Position.`, 'ok');
     };
     img.src = e.target.result;
   };
@@ -435,66 +398,162 @@ function loadPhoto(input, n) {
   input.value = '';
 }
 
+// ── Image Adjustment Panel Controls ──
 function selectEv(n) {
   activeEv = n;
   document.getElementById('tabEv1').classList.toggle('sel', n === 1);
   document.getElementById('tabEv2').classList.toggle('sel', n === 2);
-  const s = pStates[n-1];
-  document.getElementById('adjZoom').value = s.zoom;
-  document.getElementById('adjX').value = s.ox;
-  document.getElementById('adjY').value = s.oy;
-  document.getElementById('valZoom').innerText = s.zoom + '%';
+  
+  const state = pStates[n-1];
+  document.getElementById('adjZoom').value = state.zoom;
+  document.getElementById('adjX').value = state.x;
+  document.getElementById('adjY').value = state.y;
+  document.getElementById('valZoom').innerText = state.zoom + '%';
 }
 
 function updateImageState() {
+  if (isLocked) return; // Ignore input if locked
   const z = parseInt(document.getElementById('adjZoom').value);
   const x = parseInt(document.getElementById('adjX').value);
   const y = parseInt(document.getElementById('adjY').value);
-  pStates[activeEv-1] = { zoom: z, ox: x, oy: y };
+  
+  pStates[activeEv-1] = { zoom: z, x: x, y: y };
   document.getElementById('valZoom').innerText = z + '%';
   renderFull();
 }
 
-
-function roundPath(context, x, y, w, h, r) {
-  context.beginPath();
-  context.moveTo(x+r, y); context.lineTo(x+w-r, y);
-  context.quadraticCurveTo(x+w, y, x+w, y+r); context.lineTo(x+w, y+h-r);
-  context.quadraticCurveTo(x+w, y+h, x+w-r, y+h); context.lineTo(x+r, y+h);
-  context.quadraticCurveTo(x, y+h, x, y+h-r); context.lineTo(x, y+r);
-  context.quadraticCurveTo(x, y, x+r, y); context.closePath();
+// ── Lock System Controls ──
+function toggleLock() {
+  isLocked = !document.getElementById('lockCheck').checked;
+  updateLockUI();
 }
 
-// ── Rendering Engine ──
+function updateLockUI() {
+  const wrap = document.getElementById('lockWrap');
+  const text = document.getElementById('lockText');
+  const controls = document.getElementById('adjustControls');
+  
+  if(isLocked) {
+    wrap.classList.remove('is-unlocked');
+    text.textContent = '🔒 Locked (Click to Edit)';
+    controls.classList.add('locked');
+    msg('Controls locked safely.', '');
+  } else {
+    wrap.classList.add('is-unlocked');
+    text.textContent = '🔓 Unlocked (Adjust Now)';
+    controls.classList.remove('locked');
+    msg('Adjust zoom & position of photo.', 'info');
+  }
+}
+
+// Helper: Hexagonal shape
+function drawAngledRect(context, x, y, w, h, angleSize) {
+  context.beginPath();
+  context.moveTo(x + angleSize, y); context.lineTo(x + w - angleSize, y);
+  context.lineTo(x + w, y + angleSize); context.lineTo(x + w, y + h - angleSize);
+  context.lineTo(x + w - angleSize, y + h); context.lineTo(x + angleSize, y + h);
+  context.lineTo(x, y + h - angleSize); context.lineTo(x, y + angleSize);
+  context.closePath();
+}
+
+// Helper: Custom Red Tech brackets
+function drawTechBrackets(context, x, y, w, h, size) {
+  context.strokeStyle = '#ff123f'; context.lineWidth = 4;
+  context.beginPath(); context.moveTo(x + size, y); context.lineTo(x, y); context.lineTo(x, y + size); context.stroke();
+  context.beginPath(); context.moveTo(x + w - size, y); context.lineTo(x + w, y); context.lineTo(x + w, y + size); context.stroke();
+  context.beginPath(); context.moveTo(x + size, y + h); context.lineTo(x, y + h); context.lineTo(x, y + h - size); context.stroke();
+  context.beginPath(); context.moveTo(x + w - size, y + h); context.lineTo(x + w, y + h); context.lineTo(x + w, y + h - size); context.stroke();
+}
+
+// ── Red Cyber-Tech Draw Engine ──
 function drawCardBackground() {
   bCtx.clearRect(0,0,W,H);
 
-  let radGrad = bCtx.createRadialGradient(W/2, H/2, 50, W/2, H/2, 750);
-  radGrad.addColorStop(0, '#190204'); radGrad.addColorStop(0.6, '#090001'); radGrad.addColorStop(1, '#020000');
-  bCtx.fillStyle = radGrad; bCtx.fillRect(0,0,W,H);
+  // 1. Professional Deep Cyber Gradient
+  const grad = bCtx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, '#0a0103');
+  grad.addColorStop(0.5, '#150205');
+  grad.addColorStop(1, '#050001');
+  bCtx.fillStyle = grad;
+  bCtx.fillRect(0,0,W,H);
 
+  // 2. High-Tech Hexagonal Grid Pattern
   bCtx.save();
-  roundPath(bCtx, CARD_LAYOUT.boxX, CARD_LAYOUT.boxY, CARD_LAYOUT.boxW, CARD_LAYOUT.boxH, CARD_LAYOUT.boxR);
-  bCtx.lineWidth = 4; bCtx.strokeStyle = '#ff0000'; bCtx.fillStyle = 'rgba(15, 0, 2, 0.45)';
-  bCtx.fill(); bCtx.stroke(); bCtx.restore();
+  bCtx.strokeStyle = 'rgba(255, 18, 63, 0.05)';
+  bCtx.lineWidth = 1.5;
+  const hexSize = 35;
+  const hexH = hexSize * Math.sqrt(3);
+  bCtx.beginPath();
+  for(let x = 0; x < W + hexSize; x += hexSize * 1.5) {
+    for(let y = 0; y < H + hexH; y += hexH) {
+      let cy = y + (Math.round(x / (hexSize * 1.5)) % 2 === 1 ? hexH / 2 : 0);
+      for(let i=0; i<6; i++) {
+        let angle = (60 * i) * (Math.PI / 180);
+        let px = x + hexSize * Math.cos(angle);
+        let py = cy + hexSize * Math.sin(angle);
+        if(i===0) bCtx.moveTo(px, py);
+        else bCtx.lineTo(px, py);
+      }
+      bCtx.closePath();
+    }
+  }
+  bCtx.stroke();
 
+  // Background glow effect
+  let glow = bCtx.createRadialGradient(W/2, H/2, 100, W/2, H/2, 900);
+  glow.addColorStop(0, 'rgba(255, 18, 63, 0.12)');
+  glow.addColorStop(1, 'transparent');
+  bCtx.fillStyle = glow;
+  bCtx.fillRect(0,0,W,H);
+  bCtx.restore();
+
+  // 3. Draw ANGLED RED DESCRIPTION BOX
+  bCtx.save();
+  drawAngledRect(bCtx, CARD_LAYOUT.boxX, CARD_LAYOUT.boxY, CARD_LAYOUT.boxW, CARD_LAYOUT.boxH, 20);
+  bCtx.lineWidth = 3;
+  bCtx.strokeStyle = '#ff123f'; 
+  bCtx.fillStyle = 'rgba(10, 1, 3, 0.88)';
+  bCtx.fill();
+  bCtx.stroke();
+  
+  bCtx.strokeStyle = 'rgba(255, 18, 63, 0.25)';
+  bCtx.lineWidth = 1;
+  bCtx.beginPath();
+  bCtx.moveTo(CARD_LAYOUT.boxX - 10, CARD_LAYOUT.boxY + 40);
+  bCtx.lineTo(CARD_LAYOUT.boxX - 10, CARD_LAYOUT.boxY + CARD_LAYOUT.boxH - 40);
+  bCtx.moveTo(CARD_LAYOUT.boxX + CARD_LAYOUT.boxW + 10, CARD_LAYOUT.boxY + 40);
+  bCtx.lineTo(CARD_LAYOUT.boxX + CARD_LAYOUT.boxW + 10, CARD_LAYOUT.boxY + CARD_LAYOUT.boxH - 40);
+  bCtx.stroke();
+  bCtx.restore();
+
+  // 4. Draw Angled Tech Header
   const badgeX = (W - CARD_LAYOUT.badgeW) / 2;
   const badgeY = CARD_LAYOUT.boxY - (CARD_LAYOUT.badgeH / 2);
-  bCtx.save();
-  roundPath(bCtx, badgeX, badgeY, CARD_LAYOUT.badgeW, CARD_LAYOUT.badgeH, CARD_LAYOUT.badgeR);
-  bCtx.fillStyle = '#ff0000'; bCtx.shadowColor = 'rgba(255, 0, 0, 0.5)'; bCtx.shadowBlur = 10;
-  bCtx.fill(); bCtx.restore();
 
+  bCtx.save();
+  drawAngledRect(bCtx, badgeX, badgeY, CARD_LAYOUT.badgeW, CARD_LAYOUT.badgeH, 12);
+  bCtx.fillStyle = '#ff123f'; 
+  bCtx.shadowColor = 'rgba(255, 18, 63, 0.5)';
+  bCtx.shadowBlur = 12;
+  bCtx.fill();
+  
+  bCtx.fillStyle = '#ff3b5f';
+  bCtx.fillRect(badgeX - 15, badgeY + CARD_LAYOUT.badgeH/2 - 4, 10, 8);
+  bCtx.fillRect(badgeX + CARD_LAYOUT.badgeW + 5, badgeY + CARD_LAYOUT.badgeH/2 - 4, 10, 8);
+  bCtx.restore();
+
+  // 5. Draw Photo Frames (With Panning and Zoom)
   const frameX1 = (W - (CARD_LAYOUT.photosW * 2 + CARD_LAYOUT.photosGap)) / 2;
   const frameX2 = frameX1 + CARD_LAYOUT.photosW + CARD_LAYOUT.photosGap;
 
-  const box1 = { x: frameX1, y: CARD_LAYOUT.photosY, w: CARD_LAYOUT.photosW, h: CARD_LAYOUT.photosH, r: 24 };
-  const box2 = { x: frameX2, y: CARD_LAYOUT.photosY, w: CARD_LAYOUT.photosW, h: CARD_LAYOUT.photosH, r: 24 };
+  const box1 = { x: frameX1, y: CARD_LAYOUT.photosY, w: CARD_LAYOUT.photosW, h: CARD_LAYOUT.photosH };
+  const box2 = { x: frameX2, y: CARD_LAYOUT.photosY, w: CARD_LAYOUT.photosW, h: CARD_LAYOUT.photosH };
 
-  // Render the Photo slots with Pan & Zoom functionality applied
   [ {img:p1Img, b:box1, s:pStates[0]}, {img:p2Img, b:box2, s:pStates[1]} ].forEach((slot, idx) => {
     bCtx.save();
-    roundPath(bCtx, slot.b.x, slot.b.y, slot.b.w, slot.b.h, slot.b.r);
+    
+    bCtx.beginPath();
+    bCtx.rect(slot.b.x, slot.b.y, slot.b.w, slot.b.h);
     
     if(slot.img) {
       bCtx.save();
@@ -502,39 +561,47 @@ function drawCardBackground() {
       bCtx.imageSmoothingEnabled = true;
       bCtx.imageSmoothingQuality = 'high';
       
-      // Calculate how much to scale based on base frame and user slider
+      // Calculate Zoom and Pan (X/Y adjustments)
       const baseScale = Math.max(slot.b.w / slot.img.width, slot.b.h / slot.img.height);
-      const finalScale = baseScale * (slot.s.zoom / 100);
+      const scale = baseScale * (slot.s.zoom / 100);
+      const scaledW = slot.img.width * scale;
+      const scaledH = slot.img.height * scale;
       
-      const w = slot.img.width * finalScale;
-      const h = slot.img.height * finalScale;
+      const extraW = scaledW - slot.b.w;
+      const extraH = scaledH - slot.b.h;
       
-      // Calculate overflow boundaries
-      const extraW = w - slot.b.w;
-      const extraH = h - slot.b.h;
+      const panX = slot.s.x / 100;
+      const panY = slot.s.y / 100;
       
-      // Apply offset percentages to move within boundaries
-      const dx = slot.b.x - (extraW * (slot.s.ox / 100));
-      const dy = slot.b.y - (extraH * (slot.s.oy / 100));
+      const dx = slot.b.x - (extraW * panX);
+      const dy = slot.b.y - (extraH * panY);
       
-      bCtx.drawImage(slot.img, dx, dy, w, h);
+      bCtx.drawImage(slot.img, dx, dy, scaledW, scaledH);
       bCtx.restore();
 
-      bCtx.lineWidth = 6;
-      bCtx.strokeStyle = '#ff0000';
+      bCtx.lineWidth = 4;
+      bCtx.strokeStyle = 'rgba(255, 18, 63, 0.4)';
       bCtx.stroke();
     } else {
-      bCtx.fillStyle = 'rgba(255,255,255,0.01)';
+      bCtx.fillStyle = 'rgba(255, 18, 63, 0.02)';
       bCtx.fill();
-      bCtx.lineWidth = 3;
-      bCtx.strokeStyle = 'rgba(255, 0, 0, 0.25)';
+      bCtx.lineWidth = 1;
+      bCtx.strokeStyle = 'rgba(255, 18, 63, 0.2)';
       bCtx.stroke();
 
-      bCtx.fillStyle = 'rgba(255,255,255,0.12)';
-      bCtx.font = "bold 18px 'Rajdhani', sans-serif";
+      bCtx.strokeStyle = 'rgba(255, 18, 63, 0.08)';
+      bCtx.beginPath();
+      bCtx.moveTo(slot.b.x, slot.b.y); bCtx.lineTo(slot.b.x + slot.b.w, slot.b.y + slot.b.h);
+      bCtx.moveTo(slot.b.x + slot.b.w, slot.b.y); bCtx.lineTo(slot.b.x, slot.b.y + slot.b.h);
+      bCtx.stroke();
+
+      bCtx.fillStyle = 'rgba(255, 18, 63, 0.35)';
+      bCtx.font = "bold 15px 'Share Tech Mono', monospace";
       bCtx.textAlign = 'center';
-      bCtx.fillText(`UPLOAD PHOTO ${idx + 1}`, slot.b.x + slot.b.w/2, slot.b.y + slot.b.h/2);
+      bCtx.fillText(`[ NO_DATA_STREAM_0${idx+1} ]`, slot.b.x + slot.b.w/2, slot.b.y + slot.b.h/2);
     }
+    
+    drawTechBrackets(bCtx, slot.b.x, slot.b.y, slot.b.w, slot.b.h, 25);
     bCtx.restore();
   });
 }
@@ -549,7 +616,7 @@ function renderFull() {
   const headerRaw = document.getElementById('headerText').value.trim();
   if(headerRaw) {
     ctx.save();
-    ctx.font = "800 32px 'Rajdhani', sans-serif";
+    ctx.font = "700 24px 'Share Tech Mono', monospace";
     ctx.fillStyle = "#ffffff";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
@@ -562,8 +629,8 @@ function renderFull() {
   
   if(showLogo && logoImg) {
     ctx.save();
-    ctx.globalAlpha = 0.12;
-    const ls = 360;
+    ctx.globalAlpha = 0.08;
+    const ls = 340;
     const logoY = CARD_LAYOUT.photosY + (CARD_LAYOUT.photosH / 2) - (ls / 2);
     ctx.drawImage(logoImg, (W-ls)/2, logoY, ls, ls);
     ctx.restore();
@@ -595,7 +662,8 @@ function drawFixedParagraph() {
     });
   }
   
-  applyStyle(hwList, 'highlight'); applyStyle(swList, 'redtext');
+  applyStyle(hwList, 'highlight');
+  applyStyle(swList, 'redtext');
 
   let tokens = [];
   segments.forEach(seg => {
@@ -611,11 +679,11 @@ function drawFixedParagraph() {
   let fontSize = 34;
   let lineHeight = 44;
   let lines = [];
-  const maxAllowW = CARD_LAYOUT.boxW - 60; 
+  const maxAllowW = CARD_LAYOUT.boxW - 70; 
   const maxAllowH = CARD_LAYOUT.boxH - 60; 
 
   while (fontSize > 16) {
-    ctx.font = `500 ${fontSize}px 'Exo 2', sans-serif`;
+    ctx.font = `600 ${fontSize}px 'Exo 2', sans-serif`;
     lines = [];
     let currentLine = [], currentW = 0;
 
@@ -627,7 +695,10 @@ function drawFixedParagraph() {
       }
       let tw = ctx.measureText(tok.text).width;
       if(!tok.isSpace && currentW + tw > maxAllowW && currentLine.length > 0) {
-        if(currentLine[currentLine.length-1].isSpace) { currentW -= currentLine[currentLine.length-1].w; currentLine.pop(); }
+        if(currentLine[currentLine.length-1].isSpace) {
+          currentW -= currentLine[currentLine.length-1].w;
+          currentLine.pop();
+        }
         lines.push({ words: currentLine, w: currentW });
         currentLine = []; currentW = 0;
       }
@@ -635,12 +706,16 @@ function drawFixedParagraph() {
       currentW += tw;
     }
     if(currentLine.length > 0) {
-      if(currentLine[currentLine.length-1].isSpace) { currentW -= currentLine[currentLine.length-1].w; currentLine.pop(); }
+      if(currentLine[currentLine.length-1].isSpace) {
+        currentW -= currentLine[currentLine.length-1].w;
+        currentLine.pop();
+      }
       lines.push({ words: currentLine, w: currentW });
     }
 
     if (lines.length * lineHeight <= maxAllowH) break; 
-    fontSize -= 2; lineHeight -= 2.5;
+    fontSize -= 2;
+    lineHeight -= 2.5;
   }
 
   const totalH = lines.length * lineHeight;
@@ -653,8 +728,8 @@ function drawFixedParagraph() {
 
     line.words.forEach(item => {
       ctx.fillStyle = '#ffffff';
-      if(item.style === 'highlight') ctx.fillStyle = '#ffbe2e'; 
-      else if (item.style === 'redtext') ctx.fillStyle = '#ff1a35'; 
+      if(item.style === 'highlight') ctx.fillStyle = '#ffea00'; 
+      else if (item.style === 'redtext') ctx.fillStyle = '#ff123f'; 
       ctx.fillText(item.text, x, y);
       x += item.w;
     });
@@ -681,6 +756,13 @@ function setTool(tool) {
   document.getElementById('textSettings').classList.toggle('open', tool==='text');
   document.getElementById('imageSettings').classList.toggle('open', tool==='image');
   document.getElementById('paintSettings').classList.toggle('open', tool==='paint');
+  
+  // Whenever user opens Image Setup, reset the lock to prevent accidental edits
+  if (tool === 'image') {
+    isLocked = true;
+    document.getElementById('lockCheck').checked = false;
+    updateLockUI();
+  }
 }
 
 function setPaintMode(m) {
@@ -689,7 +771,7 @@ function setPaintMode(m) {
   document.getElementById('modeMosaic').classList.toggle('sel', m==='mosaic');
 }
 
-// ── Privacy Brush Paint Engine ──
+// ── Red Sensor Tech Brush ──
 function getPos(e) {
   const rect = canvas.getBoundingClientRect();
   const scaleX = W / rect.width;
@@ -699,7 +781,6 @@ function getPos(e) {
 }
 
 let painting = false;
-
 canvas.addEventListener('mousedown', handleStart); canvas.addEventListener('touchstart', handleStart, {passive:false});
 canvas.addEventListener('mousemove', handleMove); canvas.addEventListener('touchmove', handleMove, {passive:false});
 canvas.addEventListener('mouseup', handleEnd); canvas.addEventListener('touchend', handleEnd);
@@ -719,7 +800,8 @@ function handleEnd() { painting = false; }
 
 function doPaint(cx, cy) {
   const r = parseInt(document.getElementById('brushSize').value);
-  const sampleCanvas = document.createElement('canvas'); sampleCanvas.width = W; sampleCanvas.height = H;
+  const sampleCanvas = document.createElement('canvas');
+  sampleCanvas.width = W; sampleCanvas.height = H;
   const sCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
   sCtx.drawImage(baseCanvas, 0, 0); sCtx.drawImage(paintCanvas, 0, 0);
 
@@ -763,17 +845,15 @@ function undoPaint() {
 function clearPaint() { pCtx.clearRect(0,0,W,H); paintHistory = []; renderFull(); }
 
 function downloadCard() {
-  if(!p1Img && !p2Img) { msg('Please upload at least one photo.', 'err'); return; }
+  if(!p1Img && !p2Img) { msg('Please upload at least one system image.', 'err'); return; }
   const a = document.createElement('a');
-  a.download = 'BCT_V4_Perfect_' + Date.now() + '.jpg';
-  
-  // Bug fix: Fixed the typo `toToDataURL` to `toDataURL`
+  a.download = 'BCT_RedCyberTech_Card_' + Date.now() + '.jpg';
   a.href = canvas.toDataURL('image/jpeg', 0.95);
   a.click();
-  msg('Card downloaded successfully!', 'ok');
+  msg('Red Cyber Card exported successfully!', 'ok');
 }
 
 function msg(text) { document.getElementById('status').textContent = text; }
 </script>
 </body>
-</html>
+  </html>
