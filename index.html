@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>BCT RED INTEL - Tactical Card Generator</title>
 
-<!-- High-Tech Premium Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700;800&family=Share+Tech+Mono&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<!-- High-Tech Premium English Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700;800&family=Share+Tech+Mono&family=Dancing+Script:wght@700&family=Bebas+Neue&family=Oswald:wght@500;700&family=Play:wght@400;700&family=Jura:wght@500;700&family=Chakra+Petch:wght@500;700&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ==========================================================================
-   PREMIUM RED & BLACK CYBER THEME (SIGNATURE EDITION)
+   PREMIUM RED & BLACK CYBER THEME (ENGLISH EDITION)
    ========================================================================== */
 :root {
   --clr-bg-deep: #030000;
@@ -176,7 +176,7 @@ body {
 .slot-label { font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700; color: var(--clr-text-off); letter-spacing: 1px; text-shadow: 0 2px 4px #000; }
 
 /* Inputs */
-.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 4px; }
 .input-label {
   font-family: 'Share Tech Mono', monospace; font-size: 11px;
   color: var(--clr-text-dim); text-transform: uppercase; letter-spacing: 1px;
@@ -189,9 +189,52 @@ body {
   padding: 12px 14px; outline: none; transition: all 0.3s;
 }
 .cyber-input:focus { border-color: var(--clr-red-neon); background: rgba(255,0,60,0.05); box-shadow: 0 0 0 2px rgba(255,0,60,0.2); }
-select.cyber-input { cursor: pointer; color: var(--clr-text-off); }
-select.cyber-input option { background: var(--clr-bg-panel); }
 textarea.cyber-input { resize: vertical; min-height: 90px; line-height: 1.5; }
+
+/* Premium Cyber Dropdown for Fonts */
+.font-selector-wrap {
+  position: relative;
+  background: linear-gradient(90deg, rgba(20,0,5,0.9) 0%, rgba(5,0,1,0.95) 100%);
+  border: 1px solid var(--clr-red-dark);
+  border-left: 4px solid var(--clr-red-neon);
+  border-radius: var(--radius-sm);
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+}
+.font-selector-wrap:hover {
+  border-color: var(--clr-red-neon);
+  box-shadow: 0 0 15px rgba(255,0,60,0.2), inset 0 2px 10px rgba(0,0,0,0.5);
+}
+.cyber-select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 40px 14px 14px;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.cyber-select option {
+  background: #0a0002;
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  padding: 10px;
+}
+.select-arrow {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--clr-red-neon);
+  pointer-events: none;
+  font-size: 14px;
+}
 
 .sub-tabs { display: flex; gap: 4px; background: rgba(0,0,0,0.3); padding: 4px; border-radius: var(--radius-sm); }
 .sub-tab {
@@ -228,24 +271,42 @@ textarea.cyber-input { resize: vertical; min-height: 90px; line-height: 1.5; }
 .cyber-checkbox input { display: none; }
 .cyber-checkbox.checked { background: rgba(255,0,60,0.15); border-color: var(--clr-red-neon); color: var(--clr-red-neon); }
 
+/* Hidden file inputs directly */
 input[type="file"] { display: none; }
-input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 10px 0; }
+
+/* Control Blocks & Locks */
+.control-block {
+  background: rgba(10, 0, 5, 0.6);
+  border: 1px solid var(--clr-red-dark);
+  border-radius: var(--radius-md);
+  padding: 12px 15px;
+  margin-bottom: 8px;
+}
+.control-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+}
+.val-badge { color: var(--clr-red-neon); font-weight: bold; }
+
+.mini-lock-btn {
+  background: rgba(255,0,60,0.1); border: 1px solid var(--clr-red-dark);
+  padding: 4px 10px; border-radius: 4px; cursor: pointer;
+  color: var(--clr-text-dim); font-family: 'Share Tech Mono', monospace; font-size: 10px;
+  transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+}
+.mini-lock-btn.unlocked {
+  background: rgba(255,0,60,0.2); border-color: var(--clr-red-neon);
+  color: #fff; box-shadow: 0 0 8px rgba(255,0,60,0.4);
+}
+
+input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; margin: 5px 0; }
 input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; background: var(--clr-red-dark); border-radius: 2px; }
 input[type=range]::-webkit-slider-thumb {
   height: 18px; width: 18px; border-radius: 50%; background: var(--clr-red-neon); cursor: pointer;
-  -webkit-appearance: none; margin-top: -7px; border: 2px solid #fff;
+  -webkit-appearance: none; margin-top: -7px; border: 2px solid #fff; box-shadow: 0 0 10px var(--clr-red-neon);
 }
+input[type=range]:disabled { opacity: 0.3; cursor: not-allowed; }
+input[type=range]:disabled::-webkit-slider-thumb { cursor: not-allowed; background: #666; border-color: #999; box-shadow: none; }
 
-/* Lock Button */
-.lock-btn {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  padding: 12px; background: rgba(255,0,60,0.05); border: 1px dashed var(--clr-red-muted);
-  border-radius: var(--radius-sm); cursor: pointer; transition: 0.3s;
-  color: var(--clr-text-dim); font-family: 'Share Tech Mono', monospace; font-size: 12px;
-  margin-top: 10px;
-}
-.lock-btn.unlocked { background: rgba(255,0,60,0.15); border-color: var(--clr-red-neon); color: var(--clr-red-neon); }
-.controls-locked { opacity: 0.4; pointer-events: none; filter: grayscale(100%); }
 </style>
 </head>
 <body>
@@ -258,7 +319,7 @@ input[type=range]::-webkit-slider-thumb {
       <span class="sys-badge">Photocard Gen</span>
     </div>
     <div class="sys-title">AI ENGLISH CARD</div>
-    <div class="sys-subtitle">GENERATOR V4 (SIGNATURE EDITION)</div>
+    <div class="sys-subtitle">GENERATOR V5 (ENGLISH FONTS)</div>
   </header>
 
   <div class="canvas-wrapper">
@@ -268,7 +329,6 @@ input[type=range]::-webkit-slider-thumb {
   </div>
 
   <div class="dashboard">
-    <!-- PREMIUM TABS UI -->
     <nav class="cyber-tabs">
       <button class="cyber-tab active" onclick="switchTab('tab-intel')">INFO & TEXT</button>
       <button class="cyber-tab" onclick="switchTab('tab-media')">IMAGES</button>
@@ -280,7 +340,7 @@ input[type=range]::-webkit-slider-thumb {
     <div id="tab-intel" class="panel-content active">
       <div class="sec-title">SELECT INCIDENT</div>
       <div class="input-group">
-        <select id="categorySelect" class="cyber-input" onchange="applyPreset()">
+        <select id="categorySelect" class="cyber-input" onchange="applyPreset()" style="font-family:'Rajdhani', sans-serif;">
           <option value="obscene_account">Adult Content (Account)</option>
           <option value="obscene_page">Adult Content (Page)</option>
           <option value="atheist_account">Hurt Religious Sentiment (Account)</option>
@@ -294,22 +354,42 @@ input[type=range]::-webkit-slider-thumb {
         </select>
       </div>
 
-      <div class="sec-title">CARD TEXT</div>
+      <div class="sec-title">TYPOGRAPHY STYLES</div>
+      
+      <!-- PREMIUM FONT SELECTION UI (UPDATED WITH FAMILIAR FONTS) -->
       <div class="input-group">
+        <div class="input-label">Display Font</div>
+        <div class="font-selector-wrap">
+          <select id="fontSelect" class="cyber-select" onchange="queueRender()">
+            <option value="Rajdhani">Rajdhani (Modern Cyber)</option>
+            <option value="Play">Play (Clean Tech)</option>
+            <option value="Orbitron">Orbitron (Sci-Fi)</option>
+            <option value="Bebas Neue">Bebas Neue (Bold Display)</option>
+            <option value="Oswald">Oswald (Tall & Strong)</option>
+            <option value="Jura">Jura (Elegant Tech)</option>
+            <option value="Chakra Petch">Chakra Petch (Mech Style)</option>
+            <option value="Share Tech Mono">Share Tech (Terminal)</option>
+            <option value="Teko">Teko (Compact)</option>
+          </select>
+          <div class="select-arrow">▼</div>
+        </div>
+      </div>
+
+      <div class="input-group" style="margin-top: 5px;">
         <div class="input-label">Main Heading</div>
-        <input type="text" id="headerText" class="cyber-input" oninput="renderFull()">
+        <input type="text" id="headerText" class="cyber-input" oninput="queueRender()">
       </div>
       <div class="input-group">
         <div class="input-label">Description</div>
-        <textarea id="mainText" class="cyber-input" oninput="renderFull()"></textarea>
+        <textarea id="mainText" class="cyber-input" oninput="queueRender()"></textarea>
       </div>
       <div class="input-group">
-        <div class="input-label">White Highlight (Use Comma)</div>
-        <input type="text" id="hlText" class="cyber-input" placeholder="e.g., 250K followers" oninput="renderFull()" style="border-left: 3px solid #fff;">
+        <div class="input-label" style="color:var(--clr-gold)">White Highlight (Use Comma)</div>
+        <input type="text" id="hlText" class="cyber-input" placeholder="e.g., 250K followers" oninput="queueRender()" style="border-left: 3px solid #fff;">
       </div>
       <div class="input-group">
-        <div class="input-label">Red Highlight (Use Comma)</div>
-        <input type="text" id="stText" class="cyber-input" placeholder="e.g., removed" oninput="renderFull()" style="border-left: 3px solid var(--clr-red-neon);">
+        <div class="input-label" style="color:var(--clr-red-bright)">Red Highlight (Use Comma)</div>
+        <input type="text" id="stText" class="cyber-input" placeholder="e.g., removed" oninput="queueRender()" style="border-left: 3px solid var(--clr-red-neon);">
       </div>
     </div>
 
@@ -333,28 +413,38 @@ input[type=range]::-webkit-slider-thumb {
         </div>
       </div>
 
-      <div class="sec-title" style="margin-top:10px;">ADJUST IMAGES</div>
+      <div class="sec-title" style="margin-top:10px;">INDIVIDUAL CALIBRATION</div>
       <div class="sub-tabs">
         <button class="sub-tab active" id="btnEv1" onclick="selectEv(1)">SELECT LEFT</button>
         <button class="sub-tab" id="btnEv2" onclick="selectEv(2)">SELECT RIGHT</button>
       </div>
       
-      <div id="lockBtn" class="lock-btn" onclick="toggleLock()">
-        <span>🔒</span> <span id="lockText">LOCKED - CLICK TO UNLOCK</span>
-      </div>
+      <div id="mediaControls" style="background:rgba(255,0,60,0.05); padding:10px; border-radius:4px; margin-top:5px;">
+        <!-- ZOOM CONTROL -->
+        <div class="control-block">
+          <div class="control-header">
+            <div class="input-label">Zoom Level <span class="val-badge" id="valZoom">100%</span></div>
+            <button id="btn-lock-z" class="mini-lock-btn" onclick="toggleLock('z')">🔒 LOCKED</button>
+          </div>
+          <input type="range" id="adjZ" min="100" max="400" value="100" oninput="updateMediaState('z')" disabled>
+        </div>
 
-      <div id="mediaControls" class="controls-locked" style="background:rgba(255,0,60,0.05); padding:10px; border-radius:4px; margin-top:10px;">
-        <div class="input-group">
-          <div class="input-label">Zoom In/Out <span style="color:var(--clr-red-neon)" id="valZoom">100%</span></div>
-          <input type="range" id="adjZoom" min="100" max="400" value="100" oninput="updateMediaState()">
+        <!-- PAN X CONTROL -->
+        <div class="control-block">
+          <div class="control-header">
+            <div class="input-label">Move Left/Right <span class="val-badge" id="valX">50%</span></div>
+            <button id="btn-lock-x" class="mini-lock-btn" onclick="toggleLock('x')">🔒 LOCKED</button>
+          </div>
+          <input type="range" id="adjX" min="0" max="100" value="50" oninput="updateMediaState('x')" disabled>
         </div>
-        <div class="input-group">
-          <div class="input-label">Move Left/Right <span style="color:var(--clr-red-neon)" id="valX">50%</span></div>
-          <input type="range" id="adjX" min="0" max="100" value="50" oninput="updateMediaState()">
-        </div>
-        <div class="input-group">
-          <div class="input-label">Move Up/Down <span style="color:var(--clr-red-neon)" id="valY">50%</span></div>
-          <input type="range" id="adjY" min="0" max="100" value="50" oninput="updateMediaState()">
+
+        <!-- PAN Y CONTROL -->
+        <div class="control-block">
+          <div class="control-header">
+            <div class="input-label">Move Up/Down <span class="val-badge" id="valY">50%</span></div>
+            <button id="btn-lock-y" class="mini-lock-btn" onclick="toggleLock('y')">🔒 LOCKED</button>
+          </div>
+          <input type="range" id="adjY" min="0" max="100" value="50" oninput="updateMediaState('y')" disabled>
         </div>
       </div>
     </div>
@@ -380,27 +470,26 @@ input[type=range]::-webkit-slider-thumb {
     <div id="tab-fx" class="panel-content">
       <div class="sec-title">EXTRA EFFECTS</div>
       
-      <!-- Added Signature Input -->
       <div class="input-group" style="margin-bottom: 10px;">
         <div class="input-label">Custom Signature Name</div>
-        <input type="text" id="sigText" class="cyber-input" placeholder="e.g., Rifat, Operation Alpha" oninput="renderFull()" style="border-left: 3px solid var(--clr-red-neon);">
+        <input type="text" id="sigText" class="cyber-input" placeholder="e.g., Operation Alpha" oninput="queueRender()" style="border-left: 3px solid var(--clr-red-neon);">
       </div>
 
       <div class="stamp-grid">
         <label class="cyber-checkbox checked">
-          <input type="checkbox" id="chkLogo" checked onchange="toggleCheckbox(this); renderFull()">
+          <input type="checkbox" id="chkLogo" checked onchange="toggleCheckbox(this); queueRender()">
           Show BCT Logo
         </label>
         <label class="cyber-checkbox">
-          <input type="checkbox" id="chkStampTerm" onchange="toggleCheckbox(this); renderFull()">
+          <input type="checkbox" id="chkStampTerm" onchange="toggleCheckbox(this); queueRender()">
           [TERMINATED]
         </label>
         <label class="cyber-checkbox checked">
-          <input type="checkbox" id="chkSignature" checked onchange="toggleCheckbox(this); renderFull()">
+          <input type="checkbox" id="chkSignature" checked onchange="toggleCheckbox(this); queueRender()">
           Show Signature
         </label>
         <label class="cyber-checkbox">
-          <input type="checkbox" id="chkScan" onchange="toggleCheckbox(this); renderFull()">
+          <input type="checkbox" id="chkScan" onchange="toggleCheckbox(this); queueRender()">
           Background Scanlines
         </label>
       </div>
@@ -413,8 +502,9 @@ input[type=range]::-webkit-slider-thumb {
   </div>
 </div>
 
-<input type="file" id="photo1In" accept="image/*" onchange="loadPhoto(this,1)">
-<input type="file" id="photo2In" accept="image/*" onchange="loadPhoto(this,2)">
+<!-- HIDDEN FILE INPUTS directly to fix visibility bug -->
+<input type="file" id="photo1In" accept="image/*" onchange="loadPhoto(this,1)" style="display: none;">
+<input type="file" id="photo2In" accept="image/*" onchange="loadPhoto(this,2)" style="display: none;">
 
 <script>
 /* ==========================================================================
@@ -446,16 +536,19 @@ const bgCtx = bgCanvas.getContext('2d', { willReadFrequently: true });
 const paintCanvas = document.createElement('canvas'); paintCanvas.width = W; paintCanvas.height = H;
 const pCtx = paintCanvas.getContext('2d');
 
+let renderFrameId = null;
+
 let p1Img = null, p2Img = null, logoImg = null;
 let paintMode = 'blur', paintHistory = [];
-let activeEv = 1, isLocked = true;
+let activeEv = 1;
 
+// Lock States & Adjust States
+let locks = { z: true, x: true, y: true };
 let mediaStates = [
   { z: 100, x: 50, y: 50 },
   { z: 100, x: 50, y: 50 }
 ];
 
-// POLISHED: Text Box Made Smaller, Images Move Up slightly
 const GEO = {
   headerY: 95,
   boxX: 130, boxY: 145, boxW: 820, boxH: 180, 
@@ -465,7 +558,7 @@ const GEO = {
 // Load Logo
 const logoTry = new Image();
 logoTry.crossOrigin = 'anonymous';
-logoTry.onload = () => { logoImg = logoTry; renderFull(); };
+logoTry.onload = () => { logoImg = logoTry; queueRender(); };
 logoTry.src = 'https://i.ibb.co/Y72LMbdQ/20260502-163657.png';
 
 // UI Functions
@@ -490,12 +583,36 @@ function applyPreset() {
     document.getElementById('hlText').value = presets[v].w;
     document.getElementById('stText').value = presets[v].r;
   }
-  renderFull();
+  queueRender();
 }
 
 function logMsg(msg) { document.getElementById('statusLog').innerText = msg; }
 
-document.fonts.ready.then(() => applyPreset());
+// Ensure font is loaded before drawing text
+document.fonts.ready.then(() => { applyPreset(); });
+
+// Smooth Rendering Queue
+function queueRender() {
+    if (renderFrameId) cancelAnimationFrame(renderFrameId);
+    renderFrameId = requestAnimationFrame(renderFull);
+}
+
+// ── Individual Lock Controls ──
+function toggleLock(axis) {
+  locks[axis] = !locks[axis];
+  const btn = document.getElementById('btn-lock-' + axis);
+  const slider = document.getElementById('adj' + axis.toUpperCase());
+  
+  if (locks[axis]) {
+    btn.innerHTML = '🔒 LOCKED';
+    btn.classList.remove('unlocked');
+    slider.disabled = true;
+  } else {
+    btn.innerHTML = '🔓 UNLOCKED';
+    btn.classList.add('unlocked');
+    slider.disabled = false;
+  }
+}
 
 // Image Functions
 function loadPhoto(input, n) {
@@ -510,7 +627,7 @@ function loadPhoto(input, n) {
       document.getElementById('prev' + n).src = e.target.result;
       document.getElementById('slot' + n).classList.add('loaded');
       selectEv(n);
-      renderFull();
+      queueRender();
       logMsg(`Image ${n} uploaded.`);
     };
     img.src = e.target.result;
@@ -519,29 +636,12 @@ function loadPhoto(input, n) {
   input.value = '';
 }
 
-function toggleLock() {
-  isLocked = !isLocked;
-  const btn = document.getElementById('lockBtn');
-  const txt = document.getElementById('lockText');
-  const ctrl = document.getElementById('mediaControls');
-  
-  if (isLocked) {
-    btn.classList.remove('unlocked');
-    txt.innerText = 'LOCKED - CLICK TO UNLOCK';
-    ctrl.classList.add('controls-locked');
-  } else {
-    btn.classList.add('unlocked');
-    txt.innerText = 'UNLOCKED - ADJUST IMAGE';
-    ctrl.classList.remove('controls-locked');
-  }
-}
-
 function selectEv(n) {
   activeEv = n;
   document.getElementById('btnEv1').classList.toggle('active', n === 1);
   document.getElementById('btnEv2').classList.toggle('active', n === 2);
   const s = mediaStates[n - 1];
-  document.getElementById('adjZoom').value = s.z;
+  document.getElementById('adjZ').value = s.z;
   document.getElementById('adjX').value = s.x;
   document.getElementById('adjY').value = s.y;
   updateLabels(s);
@@ -553,14 +653,12 @@ function updateLabels(s) {
   document.getElementById('valY').innerText = s.y + '%';
 }
 
-function updateMediaState() {
-  if (isLocked) return;
+function updateMediaState(axis) {
+  if (locks[axis]) return;
   const s = mediaStates[activeEv - 1];
-  s.z = parseInt(document.getElementById('adjZoom').value);
-  s.x = parseInt(document.getElementById('adjX').value);
-  s.y = parseInt(document.getElementById('adjY').value);
+  s[axis] = parseInt(document.getElementById('adj' + axis.toUpperCase()).value);
   updateLabels(s);
-  renderFull();
+  queueRender();
 }
 
 // Paint / Blur Engine
@@ -622,12 +720,12 @@ function doPaint(pos) {
     }
     pCtx.restore();
   }
-  renderFull();
+  queueRender();
 }
 
 function savePaint() { paintHistory.push(pCtx.getImageData(0,0,W,H)); if(paintHistory.length > 15) paintHistory.shift(); }
-function undoPaint() { if(!paintHistory.length) return; pCtx.putImageData(paintHistory.pop(), 0, 0); renderFull(); }
-function clearPaint() { pCtx.clearRect(0,0,W,H); paintHistory = []; renderFull(); }
+function undoPaint() { if(!paintHistory.length) return; pCtx.putImageData(paintHistory.pop(), 0, 0); queueRender(); }
+function clearPaint() { pCtx.clearRect(0,0,W,H); paintHistory = []; queueRender(); }
 
 // Helper Shapes
 function drawRoundedRect(ctx, x, y, width, height, radius) {
@@ -723,7 +821,7 @@ function drawAbstractBackground() {
   bgCtx.fillStyle = '#ffffff'; 
   bgCtx.fillRect(W/2 - 100, GEO.headerY + 35, 50, 4);
 
-  // Main Text Box Background (DEEP RED & BLACK GRADIENT)
+  // Main Text Box Background
   bgCtx.save();
   drawAngledFrame(bgCtx, GEO.boxX, GEO.boxY, GEO.boxW, GEO.boxH, 30);
   
@@ -754,7 +852,6 @@ function drawAbstractBackground() {
     bgCtx.clip();
 
     if(sl.i) {
-      // CLEAN IMAGE RENDER
       const baseScale = Math.max(sl.b.w / sl.i.width, sl.b.h / sl.i.height);
       const s = baseScale * (sl.s.z / 100);
       const sw = sl.i.width * s, sh = sl.i.height * s;
@@ -777,7 +874,6 @@ function drawAbstractBackground() {
     }
     bgCtx.restore();
 
-    // Frame Borders Only (Removed CAM_text)
     bgCtx.save();
     drawAngledFrame(bgCtx, sl.b.x, sl.b.y, sl.b.w, sl.b.h, 20);
     bgCtx.strokeStyle = '#ff003c'; 
@@ -788,12 +884,14 @@ function drawAbstractBackground() {
 }
 
 /* ==============================================================
-  LARGER TEXT ENGINE
+  DYNAMIC FONT & TEXT ENGINE
   ==============================================================
 */
 function drawTypography() {
   const textRaw = document.getElementById('mainText').value.trim();
   if(!textRaw) return;
+
+  const fontFam = document.getElementById('fontSelect').value;
 
   const hList = document.getElementById('hlText').value.split(',').map(s=>s.trim()).filter(Boolean);
   const sList = document.getElementById('stText').value.split(',').map(s=>s.trim()).filter(Boolean);
@@ -848,7 +946,7 @@ function drawTypography() {
     
     for(let i=0; i<tokens.length; i++) {
       let tok = tokens[i];
-      ctx.font = (tok.style === 'white' || tok.style === 'red') ? `800 ${fontSize}px 'Rajdhani', sans-serif` : `600 ${fontSize}px 'Rajdhani', sans-serif`;
+      ctx.font = `700 ${fontSize}px '${fontFam}', sans-serif`;
       
       let tw = ctx.measureText(tok.t).width;
       let spaceNeeded = tw;
@@ -886,7 +984,7 @@ function drawTypography() {
     line.words.forEach(item => {
       if(item.isSpace) { x += item.spaceNeeded; return; }
 
-      ctx.font = (item.style === 'white' || item.style === 'red') ? `800 ${fontSize}px 'Rajdhani', sans-serif` : `600 ${fontSize}px 'Rajdhani', sans-serif`;
+      ctx.font = `700 ${fontSize}px '${fontFam}', sans-serif`;
 
       if(item.style === 'white' || item.style === 'red') {
         if(item.style === 'white') {
@@ -908,6 +1006,16 @@ function drawTypography() {
       else {
         ctx.fillStyle = '#ffe6eb';
         ctx.fillText(item.t, x, y);
+        
+        // PERFECT CENTERED STRIKE LINE
+        if(item.style === 'strike' && !item.isSpace) {
+          ctx.beginPath();
+          ctx.moveTo(x, y - 2); 
+          ctx.lineTo(x + item.w, y - 2);
+          ctx.strokeStyle = '#ff003c'; 
+          ctx.lineWidth = 2; // Thin line
+          ctx.stroke();
+        }
       }
       x += item.spaceNeeded;
     });
@@ -916,20 +1024,14 @@ function drawTypography() {
 }
 
 function renderFull() {
-  // 1. Draw Background and Base Elements First
   drawAbstractBackground();
   
-  // 2. Draw Images (so they stay below stamps/logo)
   ctx.clearRect(0,0,W,H);
   ctx.drawImage(bgCanvas, 0, 0);
   ctx.drawImage(paintCanvas, 0, 0);
 
-  // 3. Draw Typography
   drawTypography();
 
-  // 4. DRAW FX/OVERLAYS ON TOP OF EVERYTHING
-  
-  // Scanlines Overlay (before Logo & Stamps so they aren't dulled)
   if(document.getElementById('chkScan').checked) {
     ctx.save();
     ctx.fillStyle = 'rgba(0,0,0,0.25)';
@@ -940,27 +1042,23 @@ function renderFull() {
     ctx.restore();
   }
 
-  // Logo (Made larger and rendered on top layer as requested)
   if(document.getElementById('chkLogo').checked && logoImg) {
     ctx.save();
-    ctx.globalAlpha = 0.35; // Better visibility, stays solid on top
-    const sz = 450; // Larger logo
+    ctx.globalAlpha = 0.35; 
+    const sz = 450; 
     ctx.drawImage(logoImg, (W-sz)/2, GEO.photoY + (GEO.photoH/2) - sz/2, sz, sz);
     ctx.restore();
   }
 
-  // Terminated Stamp
   if(document.getElementById('chkStampTerm').checked) {
     drawStamp("TERMINATED", '#ff003c', W/2, H/2 + 50, -15);
   }
   
-  // Custom Signature Bottom Overlay
   if(document.getElementById('chkSignature').checked) {
     drawSignature();
   }
 }
 
-// Function for drawing the custom signature at the bottom
 function drawSignature() {
   const sigText = document.getElementById('sigText').value.trim();
   if(!sigText) return;
@@ -970,17 +1068,14 @@ function drawSignature() {
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   
-  // Signature Position (Bottom center of the card)
   const sigX = W / 2;
-  const sigY = GEO.photoY + GEO.photoH + 20; // Just below the images
+  const sigY = GEO.photoY + GEO.photoH + 20; 
 
-  // Neon Glow Effect
   ctx.fillStyle = '#ff3366';
   ctx.shadowColor = '#ff003c';
   ctx.shadowBlur = 15;
   ctx.fillText(sigText, sigX, sigY);
   
-  // Core text
   ctx.shadowBlur = 0;
   ctx.fillStyle = '#ffffff';
   ctx.fillText(sigText, sigX, sigY);
@@ -1009,7 +1104,7 @@ function exportCard() {
   if(!p1Img && !p2Img) { logMsg("ERROR: Upload an image first."); return; }
   logMsg("Saving Image...");
   
-  renderFull(); 
+  queueRender(); 
   
   setTimeout(() => {
     const a = document.createElement('a');
